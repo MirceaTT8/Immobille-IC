@@ -8,4 +8,4 @@ Feature-uri importante:
 - o interfata web destul de usor de navigat
 - filtre pentru o cautare care sa corespunda cerintelor cumparatorului
   
-Tool-uri: Vue.JS/React.JS, NodeJS, MongoDB
+Tool-uri: Vue.JS, NodeJS, MongoDB
