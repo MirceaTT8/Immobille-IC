@@ -23,7 +23,9 @@ import { ListingComponent } from './listing/listing.component';
     <app-header></app-header>
     <!-- <app-login></app-login> -->
     <!-- <app-register></app-register> -->
-    <app-listing></app-listing>
+    <!-- <app-home></app-home> -->
+    <router-outlet></router-outlet>
+    <!-- <app-listing></app-listing> -->
     <app-footer></app-footer>
     
   </main>

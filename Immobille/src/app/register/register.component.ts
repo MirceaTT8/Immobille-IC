@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
                 <input type="password" name="password" required maxlength="20" placeholder="enter your password" class="box">
                 <input type="password" name="c_password" required maxlength="20" placeholder="confirm your password" class="box">
                 <input type="tel" id="phone" name="phone"  required maxlength="20" placeholder="enter your phone number" class="box" >
-                <p>already have an account? <a href="login.html">login now</a></p>
+                <p>already have an account? <a href="../login">login now</a></p>
                 <input type="submit" value="register now" name="submit" class="btn">
             </form>
           </section>
