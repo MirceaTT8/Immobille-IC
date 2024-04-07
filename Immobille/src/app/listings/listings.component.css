@@ -1,0 +1,67 @@
+.announcement-list {
+    list-style: none;
+    padding: 0;
+    padding-top: 42px;
+    min-height: 600px;
+}
+
+.announcement {
+    display: flex;
+    background-color: #ffffff;
+    max-width: 800px;
+   
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.announcement img {
+    max-width: 200px;
+    max-height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.announcement-details p{
+    margin-top:0.5em;
+    margin-bottom: 0.5em; 
+}
+.announcement-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.announcement h2 {
+    font-size: 20px;
+    color: #333;
+}
+
+.announcement p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.announcement .location {
+    color: #007BFF;
+}
+.announcement .userId {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.announcement .price {
+    font-weight: bold;
+    color: #333;
+}
+
+.announcement .time {
+    font-size: 12px;
+    color: #999;
+}
+
+.announcement.hidden{
+    display:none;
+}
+

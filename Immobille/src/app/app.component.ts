@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
+import { ListingsComponent } from './listings/listings.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,13 +15,16 @@ import { HeaderComponent } from './header/header.component';
   FooterComponent,
   LoginComponent,
   RegisterComponent,
-  HeaderComponent],
+  HeaderComponent,
+  ListingsComponent],
   template: `
   <main>
     <app-header></app-header>
-    <app-login></app-login>
+    <!-- <app-login></app-login> -->
     <!-- <app-register></app-register> -->
+    <app-listings></app-listings>
     <app-footer></app-footer>
+    
   </main>
 `,
   styleUrl: './app.component.css'
