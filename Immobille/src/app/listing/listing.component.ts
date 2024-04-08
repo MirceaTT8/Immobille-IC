@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { Listing } from '../listing';
+import { Advertisement } from '../advertisement';
 
 @Component({
   selector: 'app-listing',
@@ -79,6 +79,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './listing.component.css'
 })
 export class ListingComponent {
-  @Input() listing!: ListingComponent;
+  @Input() listing!: Advertisement;
 
 }

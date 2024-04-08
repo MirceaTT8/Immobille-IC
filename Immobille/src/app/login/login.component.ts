@@ -8,7 +8,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FontAwesomeModule,RouterLink, RouterOutlet, RouterModule],
+  imports: [FontAwesomeModule,RouterLink],
   template: `
   <!-- <div class="background"></div> -->
   <section class="form-container">

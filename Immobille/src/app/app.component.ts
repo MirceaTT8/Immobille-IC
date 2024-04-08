@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ListingComponent } from './listing/listing.component';
+import { ProfileComponent } from './profile/profile.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,7 +18,8 @@ import { ListingComponent } from './listing/listing.component';
   LoginComponent,
   RegisterComponent,
   HeaderComponent,
-  ListingComponent],
+  ListingComponent,
+  ProfileComponent],
   template: `
   <main>
     <app-header></app-header>

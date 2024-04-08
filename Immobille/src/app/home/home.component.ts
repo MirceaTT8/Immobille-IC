@@ -21,16 +21,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                 </select>
             </label>
 
-            <!-- <label for="location-main" class="label2">in:
-                <select id="location-main" name="location-main">
-                    <option value="">(select one)</option>
-                    <option value="bucharest">Bucharest</option>
-                    <option value="timisoara">Timisoara</option>
-                    <option value="cluj">Cluj</option>
-                    <option value="other">Other</option>
-                </select>
-            </label> -->
-
             <label for="status-main" class="label3">for:
                 <select id="status-main" name="status-main">
                     <option value="for-sale">sale</option>

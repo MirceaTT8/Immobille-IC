@@ -1,32 +1,36 @@
 import { Component } from '@angular/core';
-
+import { RouterModule,Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   template: `
   <div class="navbar">
     <div class="logo">Immobille</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="add.html">Add Advertisement</a></li>
-                <li>
-                    <select id="profileDropdown" onchange="redirectToSelectedOption(this)">
-                        <option value="">Home</option>
-                        <option value="profile.html">Profile</option>
-                        <option value="login.html">Login</option>
-                        <option value="register.html">Register</option>
-                        <option value="myads.html">My Ads</option>
-                    </select>
-                </li>
-            </ul>
+    <nav>
+      <ul>
+        <li><a routerLink="">Home</a></li>
+        <li><a routerLink="/add">Add Advertisement</a></li>
+        <li>
+        <select (change)="navigate($event)" id="profileDropdown">
+            <option value="/">Home</option>
+            <option value="/profile">Profile</option>
+            <option value="/login">Login</option>
+            <option value="/register">Register</option>
+        </select>
+        </li>
+      </ul>
     </nav>
-</div>
-
+  </div>
 `,
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
-}
+    constructor(private router: Router) {}
+  
+    navigate(event: Event): void {
+        const selectElement = event.target as HTMLSelectElement; 
+        const url = selectElement.value;
+        this.router.navigateByUrl(url);
+      }
+  }
