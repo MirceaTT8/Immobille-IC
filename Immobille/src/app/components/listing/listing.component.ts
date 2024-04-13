@@ -1,7 +1,6 @@
-// @ts-ignore
 
 import { Component } from '@angular/core';
-import { Advertisement } from '../advertisement';
+import { Advertisement } from '../../interfaces/advertisement';
 import {NgOptimizedImage} from "@angular/common";
 
 @Component({

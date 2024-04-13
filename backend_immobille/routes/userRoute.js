@@ -4,9 +4,9 @@ const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.get("/logout", logout);
+router.post("/auth/register", registerUser);
+router.post("/auth/login", loginUser);
+router.get("/auth/logout", logout);
 router.get("/getUser", protect, getUser);
 router.get("/getLoginStatus", getLoginStatus);
 
