@@ -15,7 +15,7 @@ import { AuthService} from "../../services/auth.service";
     <section class="form-container">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h3>Create an account!</h3>
-        <input type="text" formControlName="username" required maxlength="50" placeholder="Enter your name" class="box">
+        <input type="text" formControlName="name" required maxlength="50" placeholder="Enter your name" class="box">
         <input type="email" formControlName="email" required maxlength="50" placeholder="Enter your email" class="box">
         <input type="password" formControlName="password" required maxlength="20" placeholder="Enter your password" class="box">
         <p>Already have an account? Login now</p>
@@ -30,7 +30,7 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) {
     this.registerForm = new FormGroup({
-      username: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+      name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       email: new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(50)]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
     });
@@ -42,7 +42,7 @@ export class RegisterComponent {
         next: (response) => {
           console.log('Registration successful', response);
           // Navigate to some route upon success
-          this.router.navigate(['/login']);
+          // this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error('Registration failed', error);

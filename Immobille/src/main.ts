@@ -6,14 +6,14 @@ import routeConfig from './app/app.routes';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+  //
+  // bootstrapApplication(AppComponent,
+  //   {
+  //     providers: [
+  //       provideProtractorTestingSupport(),
+  //       provideRouter(routeConfig)
+  //     ]
+  //   }
+  // ).catch(err => console.error(err));
 
-  bootstrapApplication(AppComponent,
-    {
-      providers: [
-        provideProtractorTestingSupport(),
-        provideRouter(routeConfig)
-      ]
-    }
-  ).catch(err => console.error(err));
 
-  

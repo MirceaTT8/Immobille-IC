@@ -15,8 +15,11 @@ const generateToken = (id) => {
 //Register user
 
 const registerUser = asyncHandler(async(req, res) => {
-    console.log("Received registration request with data:", req.body);
+
     const { name, email, password } = req.body;
+
+    console.log(!name + " ", !email + " ", !password);
+    console.log("Received registration request with data:", req.body);
 
     // Validation
     if (!name || !email || !password) {
@@ -53,9 +56,9 @@ const registerUser = asyncHandler(async(req, res) => {
 
         // Send user data
         return res.status(201).json({
-            _id: user._id, 
-            name: user.name, 
-            email: user.email, 
+            _id: user._id,
+            name: user.name,
+            email: user.email,
             role: user.role, // assuming role is part of user model
             token
         });
@@ -69,7 +72,7 @@ const registerUser = asyncHandler(async(req, res) => {
 //Login user
 const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
-    
+
     // Validate request
     if (!email || !password) {
         return res.status(400).json({ error: "Please add email and password" });
@@ -165,6 +168,6 @@ module.exports = {
     getUser,
     getLoginStatus,
     updateUser,
-    
+
 };
 
