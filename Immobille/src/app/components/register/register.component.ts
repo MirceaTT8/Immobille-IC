@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from "@angular/router";
+import { Router,RouterLink } from "@angular/router";
 import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { AuthService} from "../../services/auth.service";
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterLink
   ],
   template: `
     <section class="form-container">
@@ -18,7 +20,7 @@ import { AuthService} from "../../services/auth.service";
         <input type="text" formControlName="name" required maxlength="50" placeholder="Enter your name" class="box">
         <input type="email" formControlName="email" required maxlength="50" placeholder="Enter your email" class="box">
         <input type="password" formControlName="password" required maxlength="20" placeholder="Enter your password" class="box">
-        <p>Already have an account? Login now</p>
+        <p>Already have an account? <a [routerLink]="['../login']">Login now</a></p>
         <input type="submit" value="Register now" class="btn">
       </form>
     </section>
@@ -41,8 +43,7 @@ export class RegisterComponent {
       this.authService.register(this.registerForm.value).subscribe({
         next: (response) => {
           console.log('Registration successful', response);
-          // Navigate to some route upon success
-          // this.router.navigate(['/login']);
+          this.router.navigate(['login']);
         },
         error: (error) => {
           console.error('Registration failed', error);
