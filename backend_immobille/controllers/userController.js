@@ -48,8 +48,9 @@ const registerUser = asyncHandler(async(req, res) => {
         // Set token in cookie
         res.cookie("token", token, {
             path: "/",
-            httpOnly: true,
+            // httpOnly: true,
             expires: new Date(Date.now() + 1000*86400),
+            // domain: "http://localhost:4200/",
             // secure: true, // Uncomment if using https
             // sameSite: "None" // Adjust based on your cross-site requirements
         });
@@ -92,13 +93,16 @@ const loginUser = asyncHandler(async (req, res) => {
     // Generate Token
     const token = generateToken(user._id);
 
+    console.log(token)
+
     // Set the cookie with the token
     res.cookie("token", token, {
         path: "/",
-        httpOnly: true,
+        // httpOnly: true,
         expires: new Date(Date.now() + 1000*86400),
+        // domain: "http://localhost:4200/",
         //secure: true, // Uncomment if using https
-        //sameSite: "None" // Adjust based on your cross-site requirements
+        // sameSite: "None" // Adjust based on your cross-site requirements
     });
 
     // Send user data without password

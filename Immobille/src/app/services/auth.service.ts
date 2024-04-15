@@ -16,17 +16,21 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(user: User): Observable<User>{
-    return this.http.post<User>(`${this.apiUrl}/register`, user);
+    return this.http.post<User>(`${this.apiUrl}/register`, user, { withCredentials: true });
   }
 
   login(user: UserLogin): Observable<UserLogin>{
-    return this.http.post<UserLogin>(`${this.apiUrl}/login`, user);
+    return this.http.post<UserLogin>(`${this.apiUrl}/login`, user, { withCredentials: true });
   }
 
   getUser(): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/getUser`, { withCredentials: true }).pipe(
       tap(user => this.currentUserSubject.next(user))
     );
+  }
+
+  logout(): Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/logout`, null, { withCredentials: true });
   }
 
 

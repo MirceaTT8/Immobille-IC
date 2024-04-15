@@ -5,6 +5,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ListingComponent } from './components/listing/listing.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
+// De pus authGuard
+
 const routeConfig: Routes = [
     {
         path: '',

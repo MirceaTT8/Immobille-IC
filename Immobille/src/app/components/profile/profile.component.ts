@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -18,7 +19,7 @@ import { User } from '../../interfaces/user';
           <span>{{ user?.email }}</span>
         </div>
         <div class="field">
-          <button id="logoutButton">Logout</button>
+          <button id="logoutButton" (click)="logout()" >Logout</button>
         </div>
       </div>
     </div>
@@ -28,7 +29,7 @@ import { User } from '../../interfaces/user';
 export class ProfileComponent implements OnInit {
   user: User | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router:Router) {}
 
   ngOnInit() {
     this.authService.getUser().subscribe({
@@ -40,4 +41,15 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  logout() {
+      this.authService.logout().subscribe({
+        next: (response) => {
+          console.log('Logout successful', response);
+          this.router.navigate(['login']);
+        },
+        error: (error) => {
+          console.error('Logout failed', error);
+        }
+      });
+    }
 }
