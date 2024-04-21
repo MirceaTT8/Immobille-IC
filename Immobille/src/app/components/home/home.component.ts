@@ -27,14 +27,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                     <option value="for-rent">rent</option>
                 </select>
             </label>
-            <a [routerLink]="['./login']">
+            <a [routerLink]="['./listing']">
                 <button id="search">
                     Search
                 </button>
             </a>
         </div>
     </div>
-  </div> 
+  </div>
 
 `,
   styleUrl: './home.component.css'
