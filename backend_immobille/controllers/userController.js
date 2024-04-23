@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const e = require("express");
-// const { use } = require("../routes/userRoute");
 
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
@@ -145,7 +144,7 @@ const getLoginStatus = asyncHandler(async (req, res) => {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         return res.json(true);
     } catch (error) {
-        // If verification fails for any reason, consider the user not logged in
+
         return res.json(false);
     }
 });
