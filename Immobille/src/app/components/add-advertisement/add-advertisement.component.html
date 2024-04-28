@@ -1,59 +1,58 @@
-<form class="property-form">
+<form class="property-form" [formGroup]="addAdvertisementForm" (ngSubmit)="onSubmit()">
   <div class="property-type">
-    <input type="radio" id="apartment" name="property" class="property-option" value="apartment">
+    <input type="radio" id="apartment" formControlName="type" name="type" class="property-option" value="apartment">
     <label for="apartment" class="property-label">Apartment</label>
 
-    <input type="radio" id="house" name="property" class="property-option" value="house">
+    <input type="radio" id="house" formControlName="type" name="type" class="property-option" value="house">
     <label for="house" class="property-label">House</label>
 
-    <input type="radio" id="land" name="property" class="property-option" value="land">
+    <input type="radio" id="land" formControlName="type" name="type" class="property-option" value="land">
     <label for="land" class="property-label">Land</label>
 
-    <input type="radio" id="commercial" name="property" class="property-option" value="commercial">
+    <input type="radio" id="commercial" formControlName="type" name="type" class="property-option" value="commercial">
     <label for="commercial" class="property-label">Commercial</label>
   </div>
   <div class="status-selector">
-    <input type="radio" id="for-sale" name="status" class="status-option" value="for-sale" checked>
+    <input type="radio" id="for-sale" formControlName="status" name="status" class="status-option" value="for-sale" checked>
     <label for="for-sale" class="status-label">
       <span class="status-indicator"></span>
       De vanzare
     </label>
 
-    <input type="radio" id="for-rent" name="status" class="status-option" value="for-rent">
+    <input type="radio" id="for-rent" formControlName="status" name="status" class="status-option" value="for-rent">
     <label for="for-rent" class="status-label">
       <span class="status-indicator"></span>
       De inchiriat
     </label>
   </div>
   <div class="form-group">
-    <label for="title">Titlu</label>
-    <input type="text" id="title" name="title" placeholder="Titlu">
+    <label for="title" >Titlu</label>
+    <input type="text" formControlName="title" id="title" name="title" placeholder="Titlu">
   </div>
 
   <div class="form-group">
-    <label for="description">Descriere</label>
-    <textarea id="description" name="description" placeholder="Descriere" rows="4"></textarea>
+    <label for="description" >Descriere</label>
+    <textarea id="description" formControlName="description" name="description" placeholder="Descriere" rows="4"></textarea>
   </div>
 
-  <div class="form-group">
-    <label for="area">Suprafata utila</label>
-    <input type="text" id="area" name="area" placeholder="Suprafata utila">
-  </div>
+<!--  <div class="form-group">-->
+<!--    <label for="area">Suprafata utila</label>-->
+<!--    <input type="text" id="area" formControlName="area" name="area" placeholder="Suprafata utila">-->
+<!--  </div>-->
 
   <div class="form-group">
     <label for="price">Pret</label>
-    <input type="text" id="price" name="price" placeholder="Pret">
+    <input type="text" id="price" formControlName="price" name="price" placeholder="Pret">
   </div>
 
   <div class="form-group">
     <label for="location">Localizare</label>
-    <input type="text" id="location" name="location" placeholder="Localizare">
+    <input type="text" id="location" formControlName="location" name="location" placeholder="Localizare">
   </div>
 
   <!-- Image Upload -->
   <div class="form-group image-upload">
-    <input type="file" id="images" name="images" multiple>
-    <label for="images">Upload Imagini</label>
+    <input type="text" formControlName="imageUrl" id="imageUrl" name="imageUrl" multiple>
   </div>
   <input type="submit" value="Trimite" class="submit-button">
 

@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { Advertisement } from '../../interfaces/advertisement';
 import {NgOptimizedImage} from "@angular/common";
+import {PropertyService} from "../../services/property.service";
 
 @Component({
   selector: 'app-listing',
@@ -62,37 +63,18 @@ import {NgOptimizedImage} from "@angular/common";
   styleUrl: './listing.component.css'
 })
 export class ListingComponent {
-  advertisements: Advertisement[];
+  advertisements: Advertisement[] = [];
 
-  constructor() {
-    this.advertisements = [
-      {
-        status: "For Sale",
-        type: "House",
-        title: "Elegant Family Home",
-        description: "Spacious family home in a prestigious neighborhood. Perfect for growing families looking for a permanent residence close to top schools and amenities.",
-        price: "$340,000",
-        location: "Los Angeles, CA",
-        imageUrl: "../../assets/house1.jpg"
+  constructor(private propertyService: PropertyService) {}
+
+  ngOnInit(): void {
+    this.propertyService.getAllProperties().subscribe({
+      next: (data) => {
+        this.advertisements = data;
       },
-      {
-        status: "For Rent",
-        type: "Apartment",
-        title: "Modern Downtown Apartment",
-        description: "Luxurious and modern apartment with stunning city views, available for rent. Comes fully furnished with all the latest amenities.",
-        price: "$1,950/month",
-        location: "New York, NY",
-        imageUrl: "../../assets/house2.jpg"
-      },
-      {
-        status: "Lease",
-        type: "Commercial",
-        title: "Office Space Downtown",
-        description: "Prime office space in the heart of the financial district. Ideal for startups and established companies alike.",
-        price: "$2,800/month",
-        location: "San Francisco, CA",
-        imageUrl: "../../assets/house3.jpg"
+      error: (error) => {
+        console.error('Error fetching properties', error);
       }
-    ];
+    });
   }
 }
