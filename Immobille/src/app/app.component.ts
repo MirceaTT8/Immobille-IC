@@ -23,13 +23,8 @@ import { ProfileComponent } from './components/profile/profile.component';
   template: `
   <main>
     <app-header></app-header>
-    <!-- <app-login></app-login> -->
-<!--     <app-register></app-register>-->
-    <!-- <app-home></app-home> -->
     <router-outlet></router-outlet>
-    <!-- <app-listing></app-listing> -->
     <app-footer></app-footer>
-
   </main>
 `,
   styleUrl: './app.component.css'

@@ -1,17 +1,22 @@
 .profile {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    flex-grow: 1;
+    padding: 20px;
 }
 
 label {
@@ -20,3 +25,92 @@ label {
 .field {
     margin-bottom: 10px;
 }
+
+#logoutButton {
+  padding: 10px 20px;
+  background-color: #ff4d4d; /* Example logout button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#logoutButton:hover {
+  background-color: #ff3333; /* Darker shade on hover */
+}
+
+
+.dashboard {
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  border-bottom: 1px solid #eaeaea;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  flex: 1;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item.selected {
+  background-color: #e0e0e0;
+  color: #000;
+  font-weight: bold;
+}
+
+.vertical-tabs-container {
+  display: flex;
+  height: 100vh;
+}
+
+.tabs {
+  flex-direction: column;
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
+
+.tab-link {
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tab-link:hover, .tab-link.active {
+  background-color: #ddd;
+}
+
+.tab-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white;
+}
+
