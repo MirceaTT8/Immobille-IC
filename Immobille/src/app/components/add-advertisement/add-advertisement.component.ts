@@ -17,14 +17,14 @@ export class AddAdvertisementComponent {
 
   constructor(private propertyService: PropertyService, private router: Router) {
     this.addAdvertisementForm = new FormGroup({
-      type: new FormControl('', Validators.required), // Radio buttons for property type
-      status: new FormControl('for-sale', Validators.required), // Radio buttons for status, with default value
-      title: new FormControl('', [Validators.required, Validators.maxLength(100)]), // Input for title
-      description: new FormControl('', [Validators.required, Validators.maxLength(500)]), // Textarea for description
-      // area: new FormControl('', [Validators.required]), // Input for area, expects only numbers
-      price: new FormControl('', [Validators.required]), // Input for price, expects only numbers
-      location: new FormControl('', [Validators.required, Validators.maxLength(200)]), // Input for location
-      imageUrl: new FormControl(null, Validators.required) // File input for images, requires at least one image
+      type: new FormControl('', Validators.required),
+      status: new FormControl('for-sale', Validators.required),
+      title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+      // area: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      location: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      imageUrl: new FormControl(null, Validators.required)
     });
   }
 

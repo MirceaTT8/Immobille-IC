@@ -1,7 +1,7 @@
 /* In your component's .css file, e.g., login.component.css */
 
 :root{
-  --border:.1rem solid var(--light-color);
+  /*--border:.1rem solid var(--light-color);*/
   ---black:#303030;
 }
 
@@ -17,14 +17,14 @@
 .form-container form h3{
   padding-bottom: 1rem;
   font-size: 2rem;
-  color: var(--black);
+  /*color: var(--black);*/
   text-transform: capitalize;
 }
 
 .form-container form .box{
-  border: var(--border);
+  /*border: var(--border);*/
   padding: 1.4rem;
-  color: var(--black);
+  /*color: var(--black);*/
   margin: 1rem 0;
   width: 80%;
   font-size: 1rem;
@@ -33,11 +33,11 @@
 .form-container form p{
   font-size: 1rem;
   padding: 1rem 0;
-  color: var(--light-color);
+  /*color: var(--light-color);*/
 }
 
 .form-container form p a{
-  color: var(--main-color);
+  /*color: var(--main-color);*/
 }
 
 .form-container form p a:hover{

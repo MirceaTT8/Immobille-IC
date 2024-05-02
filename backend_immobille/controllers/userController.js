@@ -10,17 +10,10 @@ const generateToken = (id) => {
     })
 }
 
-
-//Register user
-
 const registerUser = asyncHandler(async(req, res) => {
 
     const { name, email, password } = req.body;
 
-    console.log(!name + " ", !email + " ", !password);
-    console.log("Received registration request with data:", req.body);
-
-    // Validation
     if (!name || !email || !password) {
         return res.status(400).json({ message: "Trebuie sa completezi toate campurile cu date valide" });
     }
@@ -28,23 +21,22 @@ const registerUser = asyncHandler(async(req, res) => {
         return res.status(400).json({ message: "Parola trebuie sa aiba minim 6 caractere" });
     }
 
-    // Check if user exists
     const userExist = await User.findOne({ email });
     if (userExist) {
         return res.status(400).json({ message: "Email-ul exista deja" });
     }
 
-    // Create new user
+
     try {
         const user = await User.create({ name, email, password });
         if (!user) {
             return res.status(400).json({ message: "Invalid user data" });
         }
 
-        // Generate token
+
         const token = generateToken(user._id);
 
-        // Set token in cookie
+
         res.cookie("token", token, {
             path: "/",
             // httpOnly: true,
@@ -54,47 +46,43 @@ const registerUser = asyncHandler(async(req, res) => {
             // sameSite: "None" // Adjust based on your cross-site requirements
         });
 
-        // Send user data
+
         return res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
-            role: user.role, // assuming role is part of user model
+            role: user.role,
             token
         });
 
     } catch (error) {
-        // Handle possible errors from User.create or other async operations
+
         return res.status(500).json({ message: error.message });
     }
 });
 
-//Login user
 const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
 
-    // Validate request
+
     if (!email || !password) {
         return res.status(400).json({ error: "Please add email and password" });
     }
-    // Check if user exists
+
     const user = await User.findOne({ email });
     if (!user) {
         return res.status(400).json({ error: "User does not exist" });
     }
 
-    // User exists, check if pass is correct
     const passwordIsCorrect = await bcrypt.compare(password, user.password);
     if (!passwordIsCorrect) {
         return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    // Generate Token
     const token = generateToken(user._id);
 
     console.log(token)
 
-    // Set the cookie with the token
     res.cookie("token", token, {
         path: "/",
         // httpOnly: true,
@@ -104,11 +92,10 @@ const loginUser = asyncHandler(async (req, res) => {
         // sameSite: "None" // Adjust based on your cross-site requirements
     });
 
-    // Send user data without password
     return res.status(200).json({ _id: user._id, email: user.email, token });
 });
 
-//logout
+
 const logout = asyncHandler( async (req, res) =>{
     res.cookie("token", "", {
         path: "/",
@@ -123,7 +110,8 @@ const logout = asyncHandler( async (req, res) =>{
 const getUser = asyncHandler(async (req, res) => {
    const user = await User.findById(req.user._id).select("-password")
    if(user) {
-    res.status(200).json(user);
+     console.log(user)
+     res.status(200).json(user);
    }
    else{
     res.status(400);

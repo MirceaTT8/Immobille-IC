@@ -4,6 +4,7 @@ import { User } from '../../interfaces/user';
 import {Router} from '@angular/router';
 import {NgClass, NgIf} from "@angular/common";
 import {ProfileInfoComponent} from "./profile-info/profile-info.component";
+import {MyAnnouncementsComponent} from "./my-announcements/my-announcements.component";
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,8 @@ import {ProfileInfoComponent} from "./profile-info/profile-info.component";
   imports: [
     NgIf,
     ProfileInfoComponent,
-    NgClass
+    NgClass,
+    MyAnnouncementsComponent
   ],
   template:`
     <div class="wrapper">
@@ -27,7 +29,9 @@ import {ProfileInfoComponent} from "./profile-info/profile-info.component";
           <div *ngIf="selectedTab === 1">
             <app-profile-info/>
           </div>
-          <div *ngIf="selectedTab === 2">My Announcements Content Here</div>
+          <div *ngIf="selectedTab === 2">
+            <app-my-announcements/>
+          </div>
           <div *ngIf="selectedTab === 3">Saved Announcements Content Here</div>
           <div *ngIf="selectedTab === 4">Add Advertisement Content Here</div>
           <div *ngIf="selectedTab === 5">Account Settings Content Here</div>
@@ -40,31 +44,6 @@ import {ProfileInfoComponent} from "./profile-info/profile-info.component";
 })
 export class ProfileComponent {
 
-  // user: User | null = null;
-  //
-  // constructor(private authService: AuthService, private router:Router) {}
-  //
-  // ngOnInit() {
-  //   this.authService.getUser().subscribe({
-  //     next: (userData) => {
-  //       this.user = userData;
-  //     },
-  //     error: (err) => {
-  //       console.error('Error fetching user data:', err);
-  //     }
-  //   });
-  // }
-  // logout() {
-  //     this.authService.logout().subscribe({
-  //       next: (response) => {
-  //         console.log('Logout successful', response);
-  //         this.router.navigate(['login']);
-  //       },
-  //       error: (error) => {
-  //         console.error('Logout failed', error);
-  //       }
-  //     });
-  //   }
   selectedTab = 1;
 
   selectTab(tabId: number) {
