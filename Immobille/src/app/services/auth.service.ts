@@ -4,6 +4,7 @@ import { User } from '../interfaces/user';
 import { UserLogin} from "../interfaces/user-login";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import {Advertisement} from "../interfaces/advertisement";
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,9 @@ export class AuthService {
     return this.http.get<User>(`${this.userUrl}/getUser`, { withCredentials: true }).pipe(
       tap(user => this.currentUserSubject.next(user))
     );
+  }
+  getUserProperties(): Observable<Advertisement[]> {
+    return this.http.get<Advertisement[]>(`${this.apiUrl}/getUserProperties`);
   }
 
   logout(): Observable<any>{

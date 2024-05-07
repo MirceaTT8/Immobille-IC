@@ -62,8 +62,7 @@ const registerUser = asyncHandler(async(req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    const {email, password} = req.body;
-
+    const {email, password, properties} = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ error: "Please add email and password" });
@@ -92,11 +91,12 @@ const loginUser = asyncHandler(async (req, res) => {
         // sameSite: "None" // Adjust based on your cross-site requirements
     });
 
-    return res.status(200).json({ _id: user._id, email: user.email, token });
+    return res.status(200).json({ _id: user._id, email: user.email, properties: user.properties, token });
 });
 
 
 const logout = asyncHandler( async (req, res) =>{
+  console.log(req.user)
     res.cookie("token", "", {
         path: "/",
         httpOnly:true,
@@ -108,18 +108,46 @@ const logout = asyncHandler( async (req, res) =>{
 });
 //Get user
 const getUser = asyncHandler(async (req, res) => {
-   const user = await User.findById(req.user._id).select("-password")
-   if(user) {
-     console.log(user)
-     res.status(200).json(user);
-   }
-   else{
-    res.status(400);
-    throw new Error("User not found");
-   }
+
+  try {
+    const user = await User.findById(req.user._id)
+      .select("-password")
+      .populate('properties')
+      .exec();
+
+    if (user) {
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        properties: user.properties
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user details: " + error.message });
+  }
 });
 
-//get login status
+const getUserProperties = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+      .select("-password")
+      .populate('properties')
+      .exec();
+
+    if (user && user.properties) {
+      res.status(200).json(user.properties);
+    } else {
+      res.status(404).json({ message: "No properties found for this user" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user properties: " + error.message });
+  }
+});
 
 const getLoginStatus = asyncHandler(async (req, res) => {
     const token = req.cookies.token;
@@ -159,6 +187,6 @@ module.exports = {
     getUser,
     getLoginStatus,
     updateUser,
-
+    getUserProperties
 };
 

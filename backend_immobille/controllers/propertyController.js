@@ -145,15 +145,6 @@ const getAllProperties = asyncHandler(async (req, res) => {
   }
 });
 
-const getUserProperties = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
-  try {
-    const userProperties = await Property.find({ user: userId });
-    return res.status(200).json(userProperties);
-  } catch (error) {
-    return res.status(500).json({ message: "Error fetching user properties: " + error.message });
-  }
-});
 
 module.exports = {
   addProperty,
@@ -161,5 +152,4 @@ module.exports = {
   getAllProperties,
   updateProperty,
   deleteProperty,
-  getUserProperties
 }

@@ -1,13 +1,14 @@
 const express = require("express");
-const { registerUser, loginUser, logout, getUser, getLoginStatus, updateUser } = require("../controllers/userController");
-const { addProperty, getProperty, updateProperty, deleteProperty, getAllProperties, getUserProperties} = require("../controllers/propertyController");
+const { registerUser, loginUser, logout, getUser, getLoginStatus, updateUser,getUserProperties } = require("../controllers/userController");
+const { addProperty, getProperty, updateProperty, deleteProperty, getAllProperties} = require("../controllers/propertyController");
 const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);
-router.post("/auth/logout", logout);
+router.post("/auth/logout",protect, logout);
+router.get("/auth/getUserProperties",protect,getUserProperties)
 router.get("/getUser", protect, getUser);
 router.get("/getLoginStatus", getLoginStatus);
 
@@ -19,7 +20,7 @@ router.get("/getAllProperties/",getAllProperties);
 router.put("/updateProperty/:id", updateProperty);
 router.delete("/deleteProperty/:id", deleteProperty);
 
-router.get("/getUserProperties",protect,getUserProperties)
+
 
 
 
