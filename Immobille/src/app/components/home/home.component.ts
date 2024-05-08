@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule,RouterLink,RouterOutlet],
+  imports: [RouterLink],
   template: `
   <div class="mid">
     <div class="searchbar">
@@ -27,7 +25,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                     <option value="for-rent">rent</option>
                 </select>
             </label>
-            <a [routerLink]="['./listing']">
+            <a [routerLink]="['listing']">
                 <button id="search">
                     Search
                 </button>

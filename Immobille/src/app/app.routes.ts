@@ -5,8 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ListingComponent } from './components/listing/listing.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddAdvertisementComponent} from "./components/add-advertisement/add-advertisement.component";
-
-// De pus authGuard
+import { DetailsComponent} from "./components/listing/details/details.component";
 
 const routeConfig: Routes = [
     {
@@ -38,6 +37,11 @@ const routeConfig: Routes = [
         path: 'add',
         component: AddAdvertisementComponent,
         title: 'Add Advertisement'
+      },
+      {
+        path: 'details/:id',
+        component: DetailsComponent,
+        title: 'Details Advertisement'
       }
  ];
 

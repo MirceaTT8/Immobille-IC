@@ -58,8 +58,8 @@ const getProperty = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    // Send property data
     return res.status(200).json({
+      id: propertyId,
       type: property.type,
       status: property.status,
       title: property.title,

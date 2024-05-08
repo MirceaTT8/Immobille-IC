@@ -1,4 +1,5 @@
 export interface Advertisement {
+  id: string;
   type: string;
   status: string;
   title: string;
