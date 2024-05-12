@@ -16,7 +16,7 @@ const protect = asyncHandler(async (req, res, next) => {
         res.status(401);
         throw new Error("User not found");
     }
-
+    console.log(user)
     req.user = user
     next();
 }

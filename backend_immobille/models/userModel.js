@@ -1,14 +1,15 @@
 const mongoose=require("mongoose");
 const bcrypt = require("bcryptjs");
+const {Schema} = require("mongoose");
 const {ObjectId} = mongoose.Schema;
 
 const userSchema = mongoose.Schema(
     {
-        name:{
+      name:{
             type: String,
             required: [true, "Please add a name"],
         },
-        email: {
+      email: {
             type: String,
             required: [true, "Please add a email"],
             unique: true,
@@ -18,17 +19,20 @@ const userSchema = mongoose.Schema(
               "Please enter a valid email",
             ],
           },
-          password: {
+      password: {
             type: String,
             required: [true, "Please add a password"],
             minLength: [6, "Password must be up to 6 characters"],
             //   maxLength: [23, "Password must not be more than 23 characters"],
           },
-          properties: [{
-            type: ObjectId,
+      properties: [{
+            type: Schema.Types.ObjectId,
             ref: 'Property'
-          }]
-
+          }],
+      savedAnnouncements: [{
+          type: Schema.Types.ObjectId,
+          ref: 'Property'
+      }]
     });
 
 

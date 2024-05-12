@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { User } from '../../interfaces/user';
-import {Router} from '@angular/router';
+import { Component} from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
 import {ProfileInfoComponent} from "./profile-info/profile-info.component";
 import {MyAnnouncementsComponent} from "./my-announcements/my-announcements.component";
+import {AdContainerComponent} from "../ad-container/ad-container.component";
+import {MySavedAnnouncementsComponent} from "./my-saved-announcements/my-saved-announcements.component";
+import {AddAdvertisementComponent} from "../add-advertisement/add-advertisement.component";
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +13,10 @@ import {MyAnnouncementsComponent} from "./my-announcements/my-announcements.comp
     NgIf,
     ProfileInfoComponent,
     NgClass,
-    MyAnnouncementsComponent
+    MyAnnouncementsComponent,
+    AdContainerComponent,
+    MySavedAnnouncementsComponent,
+    AddAdvertisementComponent
   ],
   template:`
     <div class="wrapper">
@@ -30,10 +33,14 @@ import {MyAnnouncementsComponent} from "./my-announcements/my-announcements.comp
             <app-profile-info/>
           </div>
           <div *ngIf="selectedTab === 2">
-            <app-my-announcements/>
+            <app-ad-container/>
           </div>
-          <div *ngIf="selectedTab === 3">Saved Announcements Content Here</div>
-          <div *ngIf="selectedTab === 4">Add Advertisement Content Here</div>
+          <div *ngIf="selectedTab === 3">
+            <app-my-saved-announcements/>
+          </div>
+          <div *ngIf="selectedTab === 4">
+            <app-add-advertisement/>
+          </div>
           <div *ngIf="selectedTab === 5">Account Settings Content Here</div>
         </div>
       </div>

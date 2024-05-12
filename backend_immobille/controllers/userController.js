@@ -62,7 +62,7 @@ const registerUser = asyncHandler(async(req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    const {email, password, properties} = req.body;
+    const {email, password} = req.body;
 
     if (!email || !password) {
         return res.status(400).json({ error: "Please add email and password" });
@@ -106,13 +106,30 @@ const logout = asyncHandler( async (req, res) =>{
     });
     return res.status(200).json({message : "Logged Out"});
 });
-//Get user
+
+const getLoginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.json(false);
+  }
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    return res.json(true);
+  } catch (error) {
+
+    return res.json(false);
+  }
+});
+
 const getUser = asyncHandler(async (req, res) => {
 
   try {
     const user = await User.findById(req.user._id)
       .select("-password")
       .populate('properties')
+      .populate('savedAnnouncements')
       .exec();
 
     if (user) {
@@ -120,7 +137,8 @@ const getUser = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        properties: user.properties
+        properties: user.properties,
+        savedAnnouncements: user.savedAnnouncements,
       });
     } else {
       res.status(404).json({ message: "User not found" });
@@ -128,6 +146,21 @@ const getUser = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching user details: " + error.message });
+  }
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if(user){
+    const{ name} = user;
+    user.name = req.body.name || name;
+    const updateUser = await user.save()
+    res.status(200).json(updateUser);
+  }
+  else{
+    e.status(404);
+    throw new Error(" User not found");
   }
 });
 
@@ -149,35 +182,22 @@ const getUserProperties = asyncHandler(async (req, res) => {
   }
 });
 
-const getLoginStatus = asyncHandler(async (req, res) => {
-    const token = req.cookies.token;
+const getUserSavedProperties = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+      .select("-password")
+      .populate('savedAnnouncements')
+      .exec();
 
-    if (!token) {
-        return res.json(false);
+    if (user && user.savedAnnouncements) {
+      res.status(200).json(user.savedAnnouncements);
+    } else {
+      res.status(404).json({ message: "No properties found for this user" });
     }
-
-    try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        return res.json(true);
-    } catch (error) {
-
-        return res.json(false);
-    }
-});
-//update user
-const updateUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id);
-
-    if(user){
-        const{ name} = user;
-        user.name = req.body.name || name;
-        const updateUser = await user.save()
-        res.status(200).json(updateUser);
-    }
-    else{
-        e.status(404);
-        throw new Error(" User not found");
-    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user properties: " + error.message });
+  }
 });
 
 module.exports = {
@@ -187,6 +207,7 @@ module.exports = {
     getUser,
     getLoginStatus,
     updateUser,
-    getUserProperties
+    getUserProperties,
+    getUserSavedProperties
 };
 

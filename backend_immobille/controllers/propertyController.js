@@ -145,6 +145,49 @@ const getAllProperties = asyncHandler(async (req, res) => {
   }
 });
 
+const saveProperty = asyncHandler(async (req, res) => {
+  const propertyId = req.params.id;
+  console.log(req.user)
+  console.log(propertyId)
+  if (!req.user || !req.user._id) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+
+  const userId = req.user._id;
+
+  try {
+    const property = await Property.findById(propertyId);
+    console.log(property)
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    // const user = await User.findById(userId);
+    // if (user.savedAnnouncements.includes(property._id)) {
+    //   return res.status(409).json({ message: "Property already saved" });
+    // }
+
+    await User.findByIdAndUpdate(userId, { $push: { savedAnnouncements: property._id } });
+
+    return res.status(200).json({
+      id: propertyId,
+      type: property.type,
+      status: property.status,
+      title: property.title,
+      description: property.description,
+      price: property.price,
+      location: property.location,
+      imageUrl: property.imageUrl
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+
+
+
 
 module.exports = {
   addProperty,
@@ -152,4 +195,5 @@ module.exports = {
   getAllProperties,
   updateProperty,
   deleteProperty,
+  saveProperty,
 }

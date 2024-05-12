@@ -5,4 +5,5 @@ export interface User {
   name: string;
   password: string;
   properties: Advertisement[];
+  savedAnnouncements: Advertisement[];
 }
