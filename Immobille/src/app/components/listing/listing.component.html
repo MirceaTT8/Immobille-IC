@@ -6,7 +6,7 @@
     <input type="number" id="price-max" name="price-max" placeholder="Max Price" value="100000000">
 
     <label>Property Type:</label>
-    <select id="property-type" name="property-type">
+    <select id="property-type" name="property-type" (change)="onTypeFilterChange($event)">
       <option value="any">Any</option>
       <option value="House">House</option>
       <option value="Penthouse">Penthouse</option>
@@ -15,18 +15,18 @@
     </select>
 
     <label>Location:</label>
-    <select id="location" name="location">
+    <select id="location" name="location" (change)="onLocationFilterChange($event)">
       <option value="any">Any</option>
       <option value="Cluj">Cluj</option>
       <option value="Timisoara">Timisoara</option>
-      <option value="Bucharest">Bucharest</option>
+      <option value="Bucuresti">Bucuresti</option>
       <option value="other">Other</option>
     </select>
 
     <label for="for-sale">For Sale</label>
-    <input type="radio" id="for-sale" name="sale-or-rent" value="sale" checked="checked">
+    <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" checked="checked">
     <label for="for-rent">For Rent:</label>
-    <input type="radio" id="for-rent" name="sale-or-rent" value="rent">
+    <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent">
     <button type="submit">Apply Filter</button>
   </form>
 

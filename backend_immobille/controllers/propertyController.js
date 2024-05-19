@@ -156,12 +156,12 @@ const properties = asyncHandler(async (req, res) => {
       query.status = { $regex: new RegExp(`^${status}$`, 'i') };
     }
 
-    if (type) {
+    if (type && type !== 'any') {
       query.type = { $regex: new RegExp(`^${type}$`, 'i') };
       console.log(query.type)
     }
 
-    if (location) {
+    if (location && location !== 'any') {
       query.location = { $regex: new RegExp(`${location}`, 'i') };
     }
 
