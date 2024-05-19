@@ -6,7 +6,8 @@ const {
   updateProperty,
   deleteProperty,
   getAllProperties,
-  saveProperty} = require("../controllers/propertyController");
+  saveProperty,
+  properties} = require("../controllers/propertyController");
 const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
@@ -23,7 +24,8 @@ router.patch("/updateUser", protect, updateUser);
 
 router.post("/addProperty", protect, addProperty);
 router.get("/getProperty/:id",getProperty);
-router.get("/getAllProperties/",getAllProperties);
+router.get("/getAllProperties",getAllProperties);
+router.get("/properties", properties);
 router.put("/updateProperty/:id", updateProperty);
 router.delete("/deleteProperty/:id", deleteProperty);
 

@@ -102,8 +102,10 @@
   text-align: center;
 }
 
-.image-upload input[type='file'] {
-  display: none;
+.image-upload input[type="file"] {
+  width: 70%;
+  padding: 8px;
+  color: #007BFF;
 }
 
 .image-upload label {
