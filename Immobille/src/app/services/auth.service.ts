@@ -38,7 +38,10 @@ export class AuthService {
   }
 
   updateUser(userId: string, userData: Partial<User>): Observable<User> {
-    return this.http.patch<User>(`${this.userUrl}/updateUser/${userId}`, userData);
+    return this.http.patch<User>(`${this.userUrl}/updateUser/${userId}`, userData, { withCredentials: true });
+  }
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
 
