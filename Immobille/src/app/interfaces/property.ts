@@ -1,4 +1,4 @@
-export interface Advertisement {
+export interface Property {
   id: string;
   type: string;
   status: string;

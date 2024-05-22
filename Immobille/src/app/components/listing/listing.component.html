@@ -27,7 +27,6 @@
     <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" checked="checked">
     <label for="for-rent">For Rent:</label>
     <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent">
-    <button type="submit">Apply Filter</button>
   </form>
 
   <ul class="announcement-list" id="ads-list">
@@ -35,10 +34,10 @@
       <img [src]="advertisement.imageUrl" alt="Property Image">
       <a [routerLink]="['/details', advertisement.id]" >
         <div class="announcement-details">
-          <p class="status">{{ advertisement.status }}</p>
-          <p class="property-type">{{ advertisement.type }}</p>
-          <h2>{{ advertisement.title }}</h2>
-          <p>{{ advertisement.description }}</p>
+          <p class="status">{{ getStatusDisplay(advertisement.status)}}</p>
+          <p class="property-type">{{ capitalizeFirstLetter(advertisement.type) }}</p>
+          <h2> {{ capitalizeFirstLetter(advertisement.title) }}</h2>
+          <p>{{ capitalizeFirstLetter(advertisement.description) }}</p>
           <p class="price">Price: {{ advertisement.price }}</p>
           <p class="location">{{ advertisement.location }}</p>
         </div>

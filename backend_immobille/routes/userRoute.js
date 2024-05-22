@@ -1,5 +1,12 @@
 const express = require("express");
-const { registerUser, loginUser, logout, getUser, getLoginStatus, updateUser,getUserProperties, getUserSavedProperties} = require("../controllers/userController");
+const { registerUser,
+  loginUser,
+  logout,
+  getUser,
+  getLoginStatus,
+  updateUser,
+  getUserProperties,
+  getUserSavedProperties} = require("../controllers/userController");
 const {
   addProperty,
   getProperty,
@@ -20,7 +27,7 @@ router.get("/auth/getUserSavedProperties",protect,getUserSavedProperties)
 router.get("/getUser", protect, getUser);
 router.get("/getLoginStatus", getLoginStatus);
 
-router.patch("/updateUser", protect, updateUser);
+router.patch("/updateUser/:id", protect, updateUser);
 
 router.post("/addProperty", protect, addProperty);
 router.get("/getProperty/:id",getProperty);

@@ -36,12 +36,12 @@ const routeConfig: Routes = [
       {
         path: 'add',
         component: AddAdvertisementComponent,
-        title: 'Add Advertisement'
+        title: 'Add Property'
       },
       {
         path: 'details/:id',
         component: DetailsComponent,
-        title: 'Details Advertisement'
+        title: 'Details Property'
       }
  ];
 

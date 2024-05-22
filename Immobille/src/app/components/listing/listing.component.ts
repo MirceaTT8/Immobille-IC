@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Advertisement } from '../../interfaces/advertisement';
-import { RouterLink} from "@angular/router";
+import { Property } from '../../interfaces/property';
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {PropertyService} from "../../services/property.service";
 import {CommonModule} from "@angular/common";
 
@@ -16,9 +16,9 @@ import {CommonModule} from "@angular/common";
   styleUrl: './listing.component.css'
 })
 export class ListingComponent implements OnInit {
-  advertisements: Advertisement[] = [];
+  advertisements: Property[] = [];
 
-  filters: Advertisement = {
+  filters: Property = {
     id: "",
     type: "any",
     status: "for-sale",
@@ -29,20 +29,32 @@ export class ListingComponent implements OnInit {
     imageUrl: ""
   }
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyService: PropertyService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getProperties();
+    this.route.queryParams.subscribe(params => {
+      this.filters.type = params['type'] || 'any';
+      this.filters.status = params['status'] || 'for-sale';
+      this.getProperties();
+    });
   }
 
   getProperties(): void {
     this.propertyService.getProperties(this.filters).subscribe(data => {
-      this.advertisements
-        = data;
+      console.log('Received data:', data); // Log the data received from the service
+      if (Array.isArray(data)) {
+        this.advertisements = data;
+      } else {
+        console.error('Expected an array of advertisements but received:', data);
+        this.advertisements = [];
+      }
+    }, error => {
+      console.error('Error fetching properties:', error);
+      this.advertisements = [];
     });
   }
 
-  applyFilter<K extends keyof Advertisement>(filterType: K, value: Advertisement[K]): void {
+  applyFilter<K extends keyof Property>(filterType: K, value: Property[K]): void {
     console.log(`Applying filter: ${filterType} = ${value}`); // Log the filter being applied
     this.filters[filterType] = value;
     this.getProperties();
@@ -63,8 +75,21 @@ export class ListingComponent implements OnInit {
     this.applyFilter('location', target.value);
   }
 
-  trackByDescription(index: number, advertisement: Advertisement): string {
+  getStatusDisplay(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      'for-sale': 'For Sale',
+      'for-rent': 'For Rent'
+    };
+    return statusMap[status.toLowerCase()] || status;
+  }
+
+  trackByDescription(index: number, advertisement: Property): string {
     return advertisement.description;
   }
+
+  capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
 
 }

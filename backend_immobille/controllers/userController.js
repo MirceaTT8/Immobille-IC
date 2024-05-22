@@ -124,7 +124,6 @@ const getLoginStatus = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-
   try {
     const user = await User.findById(req.user._id)
       .select("-password")
@@ -133,13 +132,9 @@ const getUser = asyncHandler(async (req, res) => {
       .exec();
 
     if (user) {
-      res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        properties: user.properties,
-        savedAnnouncements: user.savedAnnouncements,
-      });
+      // Convert mongoose document to plain JavaScript object
+      const userObj = user.toObject();
+      res.status(200).json(userObj);
     } else {
       res.status(404).json({ message: "User not found" });
     }
@@ -150,17 +145,22 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
 
-  if(user){
-    const{ name} = user;
+  const userId = req.params.id;
+  console.log("userId:", userId);
+  console.log("req.body:", req.body);
+
+  const user = await User.findById(userId);
+
+  if (user) {
+    const { name, phoneNumber } = user;
     user.name = req.body.name || name;
-    const updateUser = await user.save()
-    res.status(200).json(updateUser);
-  }
-  else{
-    e.status(404);
-    throw new Error(" User not found");
+    user.phoneNumber = req.body.phoneNumber || phoneNumber;
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
 });
 

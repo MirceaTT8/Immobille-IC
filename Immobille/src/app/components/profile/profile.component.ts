@@ -5,6 +5,7 @@ import {MyAnnouncementsComponent} from "./my-announcements/my-announcements.comp
 import {AdContainerComponent} from "../ad-container/ad-container.component";
 import {MySavedAnnouncementsComponent} from "./my-saved-announcements/my-saved-announcements.component";
 import {AddAdvertisementComponent} from "../add-advertisement/add-advertisement.component";
+import {SettingsComponent} from "./settings/settings.component";
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ import {AddAdvertisementComponent} from "../add-advertisement/add-advertisement.
     MyAnnouncementsComponent,
     AdContainerComponent,
     MySavedAnnouncementsComponent,
-    AddAdvertisementComponent
+    AddAdvertisementComponent,
+    SettingsComponent
   ],
   template:`
     <div class="wrapper">
@@ -41,7 +43,9 @@ import {AddAdvertisementComponent} from "../add-advertisement/add-advertisement.
           <div *ngIf="selectedTab === 4">
             <app-add-advertisement/>
           </div>
-          <div *ngIf="selectedTab === 5">Account Settings Content Here</div>
+          <div *ngIf="selectedTab === 5">
+            <app-settings/>
+          </div>
         </div>
       </div>
 
