@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="profile">
+    <h2>User Profile</h2>
+    <div class="field">
+      <label>Name:</label>
+      <span>{{ user?.name }}</span>
+    </div>
+    <div class="field">
+      <label>Email:</label>
+      <span>{{ user?.email }}</span>
+    </div>
+    <div class="field">
+      <button id="logoutButton" (click)="logout()" >Logout</button>
+    </div>
+  </div>
+</div>

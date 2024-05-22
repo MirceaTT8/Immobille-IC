@@ -1,0 +1,14 @@
+<ul class="announcement-list" id="ads-list">
+  <li class="announcement">
+    <img [src]="advertisement?.imageUrl" alt="Property Image">
+      <div class="announcement-details">
+        <p class="status">{{ advertisement?.status }}</p>
+        <p class="property-type">{{ advertisement?.type }}</p>
+        <h2>{{ advertisement?.title }}</h2>
+        <p>{{ advertisement?.description }}</p>
+        <p class="price">Price: {{ advertisement?.price }}</p>
+        <p class="location">{{ advertisement?.location }}</p>
+      </div>
+  </li>
+
+</ul>
