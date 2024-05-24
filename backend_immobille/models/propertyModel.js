@@ -8,6 +8,12 @@ const propertySchema = new mongoose.Schema({
   price: { type: String, required: true },
   location: { type: String, required: true },
   imageUrl: { type: String, default: null },
+  images: [
+    {
+      url: { type: String, required: true },
+      altText: { type: String }
+    }
+  ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

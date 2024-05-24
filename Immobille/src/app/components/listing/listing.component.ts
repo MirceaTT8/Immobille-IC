@@ -26,7 +26,9 @@ export class ListingComponent implements OnInit {
     description: "",
     price: "",
     location: "",
-    imageUrl: ""
+    imageUrl: "",
+    images: [],
+    user: ''
   }
 
   constructor(private propertyService: PropertyService, private route: ActivatedRoute) {}
