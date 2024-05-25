@@ -6,11 +6,11 @@ const addProperty = asyncHandler(async (req, res) => {
   if (!req.user || !req.user._id) {
     return res.status(401).json({ message: "User not authenticated" });
   }
-  const { type, status, title, description, price, location, imageUrl } = req.body;
+  const { type, status, title, description, price, location, imageUrl, images } = req.body;
   const userId = req.user._id;
 
 
-  if (!type || !status || !title || !description || !price || !location || !imageUrl) {
+  if (!type || !status || !title || !description || !price || !location || !Array.isArray(images)) {
     return res.status(400).json({ message: "Trebuie sa completezi toate campurile cu date valide" });
   }
 
@@ -23,6 +23,7 @@ const addProperty = asyncHandler(async (req, res) => {
       price,
       location,
       imageUrl,
+      images,
       user: userId
     });
 
@@ -40,6 +41,7 @@ const addProperty = asyncHandler(async (req, res) => {
       price: property.price,
       location: property.location,
       imageUrl: property.imageUrl,
+      images: property.images,
       userId: userId
     });
 
@@ -53,20 +55,22 @@ const getProperty = asyncHandler(async (req, res) => {
   const propertyId = req.params.id;
 
   try {
-    const property = await Property.findById(propertyId);
+    const property = await Property.findById(propertyId).populate('user', '_id');
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
 
     return res.status(200).json({
-      id: propertyId,
+      id: property._id.toString(),
       type: property.type,
       status: property.status,
       title: property.title,
       description: property.description,
       price: property.price,
       location: property.location,
-      imageUrl: property.imageUrl
+      imageUrl: property.imageUrl,
+      images: property.images,
+      userId: property.user._id.toString()
     });
 
   } catch (error) {
@@ -136,7 +140,8 @@ const getAllProperties = asyncHandler(async (req, res) => {
       description: property.description,
       price: property.price,
       location: property.location,
-      imageUrl: property.imageUrl
+      imageUrl: property.imageUrl,
+      images: property.images
     }));
 
     return res.status(200).json(formattedProperties);
@@ -222,10 +227,10 @@ const saveProperty = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    // const user = await User.findById(userId);
-    // if (user.savedAnnouncements.includes(property._id)) {
-    //   return res.status(409).json({ message: "Property already saved" });
-    // }
+    const user = await User.findById(userId);
+    if (user.savedAnnouncements.includes(property._id)) {
+      return res.status(409).json({ message: "Property already saved" });
+    }
 
     await User.findByIdAndUpdate(userId, { $push: { savedAnnouncements: property._id } });
 

@@ -11,12 +11,12 @@ export class PropertyService {
 
   constructor(private http: HttpClient) {}
 
-  addProperty(advertisement:Property): Observable<any>{
-    return this.http.post<any>(`${this.propertyUrl}/addProperty`, advertisement, { withCredentials: true });
+  addProperty(advertisement:Property): Observable<Property>{
+    return this.http.post<Property>(`${this.propertyUrl}/addProperty`, advertisement, { withCredentials: true });
   }
 
   getProperty(id: string): Observable<Property>{
-    return this.http.get<Property>(`${this.propertyUrl}/getProperty/${id}`);
+    return this.http.get<Property>(`${this.propertyUrl}/getProperty/${id}`, { withCredentials: true });
   }
 
   updateProperty(propertyId: string, propertyData: any): Observable<any> {

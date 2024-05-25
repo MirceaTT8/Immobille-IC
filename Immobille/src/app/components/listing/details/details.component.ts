@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService} from "../../../services/property.service";
 import { Property} from "../../../interfaces/property";
@@ -19,78 +19,95 @@ import {NgImageSliderModule} from "ng-image-slider";
   styleUrl: './details.component.css'
 })
 export class DetailsComponent implements OnInit {
-  // advertisement: Property | null = null;
+  // advertisement: Property | undefined;
   // imageObject: Array<object> = []; // Array to hold image objects for the slider
   //
-  // constructor(
-  //   private route: ActivatedRoute,
-  //   private propertyService: PropertyService
-  // ) {}
+  // constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
   //
   // ngOnInit(): void {
-  //   this.route.paramMap.subscribe(params => {
-  //     const propertyId = params.get('id');
-  //     if (propertyId) {
-  //       this.propertyService.getProperty(propertyId).subscribe({
-  //         next: (data) => {
-  //           this.advertisement = data;
-  //           if (data.images) {
-  //             this.imageObject = data.images.map(image => {
-  //               return {
-  //                 image: image.url,
-  //                 thumbImage: image.url,
-  //                 alt: image.altText || 'Property Image'
-  //               };
-  //             });
-  //           }
-  //         },
-  //         error: (error) => {
-  //           console.error('Error fetching property details', error);
-  //         }
-  //       });
-  //     }
-  //   });
+  //   // Hardcoded property data
+  //   this.advertisement = {
+  //     id: '6650f1923cbad2379943d2c0',
+  //     type: 'Apartment',
+  //     status: 'for-sale',
+  //     title: 'Beautiful Apartment in the City Center',
+  //     description: 'A beautiful apartment located in the heart of the city, close to all amenities.',
+  //     price: '300000',
+  //     location: 'City Center',
+  //     images: [
+  //       {
+  //         url: 'assets/house1.jpg',
+  //         altText: 'Living room view',
+  //       },
+  //       {
+  //         url: 'assets/house2.jpg',
+  //         altText: 'Bedroom view',
+  //       },
+  //       {
+  //         url: 'assets/house3.jpg',
+  //         altText: 'Horse Dick View',
+  //       }
+  //     ],
+  //     imageUrl: 'assets/house2.jpg',
+  //     user: '6633885feb09ac5535c135cf'
+  //   };
+  //
+  //   if (this.advertisement.images) {
+  //     this.imageObject = this.advertisement.images.map((image: { url?: String; altText?: String | undefined; }) => ({
+  //       image: image.url,
+  //       thumbImage: image.url,
+  //       alt: image.altText || 'Property Image',
+  //     }));
+  //     // Manually trigger change detection
+  //     this.cdr.detectChanges();
+  //     console.log(this.advertisement)
+  //     console.log(this.advertisement.images)
+  //   }
   // }
-  advertisement: Property | null = null;
+  advertisement: Property | undefined;
   imageObject: Array<object> = []; // Array to hold image objects for the slider
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private propertyService: PropertyService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    // Hardcoded property for testing
-    this.advertisement = {
-      id: '1',
-      type: 'House',
-      status: 'For Sale',
-      title: 'Beautiful Family Home',
-      description: 'A beautiful family home located in a serene neighborhood.',
-      price: '500000',
-      location: '123 Main St, Anytown, USA',
-      images: [
-        {
-          url: 'assets/house1.jpg',
-          altText: 'Front view of the house'
-        },
-        {
-          url: 'assets/house2.jpg',
-          altText: 'Living room'
-        },
-        {
-          url: 'assets/house3.jpg',
-          altText: 'Backyard'
-        }
-      ],
-      imageUrl: "",
-      user: 'user_id'
-    };
-
-    if (this.advertisement.images) {
-      this.imageObject = this.advertisement.images.map(image => ({
-        image: image.url,
-        thumbImage: image.url,
-        alt: image.altText || 'Property Image'
-      }));
-      console.log(this.imageObject); // Verify the image objects
-    }
+    this.route.paramMap.subscribe(params => {
+      const propertyId = params.get('id');
+      if (propertyId) {
+        this.getProperty(propertyId);
+      }
+    });
   }
+  getProperty(propertyId: string): void {
+    this.propertyService.getProperty(propertyId).subscribe({
+      next: (data) => {
+        this.advertisement = data;
+        console.log(this.advertisement)
+        if (this.advertisement.images) {
+          this.imageObject = this.advertisement.images.map((image: { url: String; altText?: String | undefined; }) => ({
+            image: image.url,
+            thumbImage: image.url,
+            alt: image.altText || 'Property Image',
+          }));
+
+          // if (this.imageObject.length > 0) {
+          //   const firstImage = this.imageObject[0];
+          //   this.imageObject.splice(1, 0, firstImage);
+          // }
+
+          console.log(this.imageObject[0]); // Verify the image object structure
+          // Manually trigger change detection
+          this.cdr.detectChanges();
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching property details', error);
+      }
+    });
+  }
+
+
 }
