@@ -1,17 +1,39 @@
 const Property = require('../models/propertyModel');
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-
+const fs = require('fs');
+const path = require('path');
 const addProperty = asyncHandler(async (req, res) => {
+  console.log(req.body); // Log the received fields
+  console.log(req.files); // Log the received files
+
   if (!req.user || !req.user._id) {
     return res.status(401).json({ message: "User not authenticated" });
   }
-  const { type, status, title, description, price, location, imageUrl, images } = req.body;
+
+  const { type, status, title, description, price, location } = req.body;
   const userId = req.user._id;
 
-
-  if (!type || !status || !title || !description || !price || !location || !Array.isArray(images)) {
+  if (!type || !status || !title || !description || !price || !location || !req.files || Object.keys(req.files).length === 0) {
     return res.status(400).json({ message: "Trebuie sa completezi toate campurile cu date valide" });
+  }
+
+  const uploadedImages = [];
+  const uploadPath = path.join(__dirname, '../../Immobille/src/assets/'); // Save to a dedicated uploads directory in the backend
+
+  // Ensure the directory exists
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true });
+  }
+
+  if (!Array.isArray(req.files.images)) {
+    req.files.images = [req.files.images];
+  }
+
+  for (const image of req.files.images) {
+    const uploadFilePath = path.join(uploadPath, image.name);
+    await image.mv(uploadFilePath);
+    uploadedImages.push({url: `assets/${image.name}`, altText: image.name}); // Ensure URL matches the served path
   }
 
   try {
@@ -22,8 +44,8 @@ const addProperty = asyncHandler(async (req, res) => {
       description,
       price,
       location,
-      imageUrl,
-      images,
+      imageUrl: uploadedImages[0].url, // Assuming the first image is the main image
+      images: uploadedImages,
       user: userId
     });
 
@@ -49,7 +71,6 @@ const addProperty = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
-
 
 const getProperty = asyncHandler(async (req, res) => {
   const propertyId = req.params.id;

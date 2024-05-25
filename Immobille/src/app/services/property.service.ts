@@ -11,8 +11,8 @@ export class PropertyService {
 
   constructor(private http: HttpClient) {}
 
-  addProperty(advertisement:Property): Observable<Property>{
-    return this.http.post<Property>(`${this.propertyUrl}/addProperty`, advertisement, { withCredentials: true });
+  addProperty(propertyData:FormData): Observable<Property>{
+    return this.http.post<Property>(`${this.propertyUrl}/addProperty`, propertyData, { withCredentials: true });
   }
 
   getProperty(id: string): Observable<Property>{

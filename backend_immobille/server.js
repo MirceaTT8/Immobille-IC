@@ -1,10 +1,12 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const fileUpload = require('express-fileupload');
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
 const errorHandler = require("./middleware/errorMiddleware");
+const path = require('path');
 
 mongoose.set('strictQuery', true); // Suppress the warning and maintain current behavior
 
@@ -13,7 +15,10 @@ const app = express();
 //MiddleWares
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload());
 app.use(express.urlencoded({extended : false}));
+
+
 app.use(cors({
   origin: 'http://localhost:4200', // Allow only this origin to access
   credentials: true, // Allow cookies to be sent

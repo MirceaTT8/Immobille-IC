@@ -16,8 +16,11 @@ const {
   saveProperty,
   properties} = require("../controllers/propertyController");
 const { protect } = require("../middleware/authMiddleware");
+const path = require("node:path");
 const router = express.Router();
 
+
+router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);
