@@ -39,6 +39,11 @@ const routeConfig: Routes = [
         title: 'Add Property'
       },
       {
+        path: 'add/:id', // Add this route for updating property with an ID
+        component: AddAdvertisementComponent,
+        title: 'Update Property'
+      },
+      {
         path: 'details/:id',
         component: DetailsComponent,
         title: 'Details Property'

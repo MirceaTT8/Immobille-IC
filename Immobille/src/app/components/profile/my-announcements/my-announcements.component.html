@@ -14,6 +14,7 @@
           <button>Go to details: </button>
         </a>
         <button class="delete-button" (click)="deleteProperty(advertisement._id)">Delete</button>
+        <button class="update-button" [routerLink]="['/add', advertisement._id]">Update</button>
       </div>
   </li>
 </ul>

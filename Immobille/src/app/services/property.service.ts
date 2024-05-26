@@ -19,8 +19,8 @@ export class PropertyService {
     return this.http.get<Property>(`${this.propertyUrl}/getProperty/${id}`, { withCredentials: true });
   }
 
-  updateProperty(propertyId: string, propertyData: any): Observable<any> {
-    return this.http.patch<any>(`${this.propertyUrl}/updateProperty/${propertyId}`, propertyData);
+  updateProperty(propertyId: string, propertyData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.propertyUrl}/updateProperty/${propertyId}`, propertyData, { withCredentials: true });
   }
 
   getAllProperties(): Observable<any[]> {
