@@ -82,6 +82,39 @@ const getProperty = asyncHandler(async (req, res) => {
     }
 
     return res.status(200).json({
+      id: property._id,
+      type: property.type,
+      status: property.status,
+      title: property.title,
+      description: property.description,
+      price: property.price,
+      location: property.location,
+      imageUrl: property.imageUrl,
+      images: property.images,
+      userId: property.user._id
+    });
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+const updateProperty = asyncHandler(async (req, res) => {
+  const propertyId = req.params.id;
+  const { type, status, title, description, price, location, imageUrl, images } = req.body;
+
+  try {
+    const property = await Property.findByIdAndUpdate(
+      propertyId,
+      { type, status, title, description, price, location, imageUrl, images },
+      { new: true, runValidators: true }
+    ).populate('user', '_id');
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    return res.status(200).json({
       id: property._id.toString(),
       type: property.type,
       status: property.status,
@@ -98,34 +131,12 @@ const getProperty = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
-
-const updateProperty = asyncHandler(async (req, res) => {
-  const propertyId = req.params.id;
-  const { type, status, title, description, price, location, imageUrl } = req.body;
-
-  try {
-    const property = await Property.findByIdAndUpdate(propertyId, { type, status, title, description, price, location, imageUrl }, { new: true, runValidators: true });
-    if (!property) {
-      return res.status(404).json({ message: "Property not found" });
-    }
-
-    return res.status(200).json({
-      type: property.type,
-      status: property.status,
-      title: property.title,
-      description: property.description,
-      price: property.price,
-      location: property.location,
-      imageUrl: property.imageUrl
-    });
-
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-});
-
 const deleteProperty = asyncHandler(async (req, res) => {
   const { id } = req.params;
+
+  if (!req.user || !req.user._id) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
 
   if (!id) {
     return res.status(400).json({ message: "Property ID is required" });
@@ -136,6 +147,11 @@ const deleteProperty = asyncHandler(async (req, res) => {
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
+
+    if (property.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You do not have permission to delete this property" });
+    }
+
     await property.remove();
     return res.status(200).json({ message: "Property deleted successfully" });
   } catch (error) {
@@ -146,12 +162,12 @@ const deleteProperty = asyncHandler(async (req, res) => {
 const getAllProperties = asyncHandler(async (req, res) => {
   try {
 
+
     const properties = await Property.find({});
 
     if (!properties.length) {
       return res.status(200).json({ message: "No properties found" });
     }
-
 
     const formattedProperties = properties.map(property => ({
       id: property._id,
@@ -173,10 +189,14 @@ const getAllProperties = asyncHandler(async (req, res) => {
 
 const properties = asyncHandler(async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
     const { status, type, location } = req.query;
     console.log('Received query parameters:', { status, type, location });
 
-    let query = {};
+    let query = { user: { $ne: req.user._id } };
+
 
     if (status) {
       query.status = { $regex: new RegExp(`^${status}$`, 'i') };

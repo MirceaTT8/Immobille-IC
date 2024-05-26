@@ -1,7 +1,8 @@
 import {User} from "./user";
 
 export interface Property {
-  id: string;
+  _id?: any;
+  id?: any;
   type: string;
   status: string;
   title: string;

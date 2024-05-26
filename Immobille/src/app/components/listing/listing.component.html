@@ -31,8 +31,8 @@
 
   <ul class="announcement-list" id="ads-list">
     <li *ngFor="let advertisement of advertisements; trackBy: trackByDescription" class="announcement">
-      <img [src]="advertisement.imageUrl" alt="Property Image">
       <a [routerLink]="['/details', advertisement.id]" >
+        <img [src]="advertisement.imageUrl" alt="Property Image">
         <div class="announcement-details">
           <p class="status">{{ getStatusDisplay(advertisement.status)}}</p>
           <p class="property-type">{{ capitalizeFirstLetter(advertisement.type) }}</p>
@@ -43,6 +43,5 @@
         </div>
       </a>
     </li>
-
   </ul>
 </div>

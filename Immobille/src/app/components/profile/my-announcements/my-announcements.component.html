@@ -1,7 +1,8 @@
 <ul class="announcement-list" id="ads-list">
-  @for (advertisement of user?.properties; track advertisement.description) {
-    <li class="announcement">
+  <li *ngFor="let advertisement of user?.properties; trackBy: trackByDescription" class="announcement">
+
       <img [src]="advertisement.imageUrl" alt="Property Image">
+
       <div class="announcement-details">
         <p class="status">{{ advertisement.status }}</p>
         <p class="property-type">{{ advertisement.type }}</p>
@@ -9,7 +10,10 @@
         <p>{{ advertisement.description }}</p>
         <p class="price">Price: {{ advertisement.price }}</p>
         <p class="location">{{ advertisement.location }}</p>
+        <a [routerLink]="['/details', advertisement._id]" >
+          <button>Go to details: </button>
+        </a>
+        <button class="delete-button" (click)="deleteProperty(advertisement._id)">Delete</button>
       </div>
-    </li>
-  }
+  </li>
 </ul>

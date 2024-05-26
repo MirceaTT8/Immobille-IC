@@ -44,7 +44,7 @@ export class PropertyService {
 
     console.log('Sending request with params:', params.toString()); // Log the request parameters
 
-    return this.http.get<Property[]>(`${this.propertyUrl}/properties`, { params });
+    return this.http.get<Property[]>(`${this.propertyUrl}/properties`, { params, withCredentials:true});
   }
 
 
@@ -52,4 +52,7 @@ export class PropertyService {
     return this.http.get<any[]>(`${this.propertyUrl}/getUserProperties`);
   }
 
+  deleteProperty(propertyId: any): Observable<any> {
+    return this.http.delete<any>(`${this.propertyUrl}/deleteProperty/${propertyId}`, { withCredentials: true });
+  }
 }

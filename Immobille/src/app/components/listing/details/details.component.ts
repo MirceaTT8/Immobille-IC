@@ -93,13 +93,8 @@ export class DetailsComponent implements OnInit {
             alt: image.altText || 'Property Image',
           }));
 
-          // if (this.imageObject.length > 0) {
-          //   const firstImage = this.imageObject[0];
-          //   this.imageObject.splice(1, 0, firstImage);
-          // }
 
-          console.log(this.imageObject[0]); // Verify the image object structure
-          // Manually trigger change detection
+          console.log(this.imageObject[0]);
           this.cdr.detectChanges();
         }
       },

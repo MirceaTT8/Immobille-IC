@@ -35,7 +35,7 @@ import {SettingsComponent} from "./settings/settings.component";
             <app-profile-info/>
           </div>
           <div *ngIf="selectedTab === 2">
-            <app-ad-container/>
+            <app-my-announcements/>
           </div>
           <div *ngIf="selectedTab === 3">
             <app-my-saved-announcements/>

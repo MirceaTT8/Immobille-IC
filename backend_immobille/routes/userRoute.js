@@ -34,10 +34,10 @@ router.patch("/updateUser/:id", protect, updateUser);
 
 router.post("/addProperty", protect, addProperty);
 router.get("/getProperty/:id",getProperty);
-router.get("/getAllProperties",getAllProperties);
-router.get("/properties", properties);
+// router.get("/getAllProperties",protect ,getAllProperties);
+router.get("/properties", protect, properties);
 router.put("/updateProperty/:id", updateProperty);
-router.delete("/deleteProperty/:id", deleteProperty);
+router.delete("/deleteProperty/:id", protect , deleteProperty);
 
 router.post("/saveProperty/:id", protect, saveProperty);
 

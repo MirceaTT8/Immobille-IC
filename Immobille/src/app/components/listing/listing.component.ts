@@ -20,6 +20,7 @@ export class ListingComponent implements OnInit {
 
   filters: Property = {
     id: "",
+    _id:"",
     type: "any",
     status: "for-sale",
     title: "",
@@ -43,7 +44,7 @@ export class ListingComponent implements OnInit {
 
   getProperties(): void {
     this.propertyService.getProperties(this.filters).subscribe(data => {
-      console.log('Received data:', data); // Log the data received from the service
+      console.log('Received data:', data);
       if (Array.isArray(data)) {
         this.advertisements = data;
       } else {
