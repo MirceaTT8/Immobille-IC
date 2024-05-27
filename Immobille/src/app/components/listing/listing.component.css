@@ -1,3 +1,88 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f4f4; /* Light gray background for the whole page */
+}
+
+#main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: center; /* Center the button */
+  margin-bottom: 20px;
+}
+
+#toggle-filters {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+}
+
+#toggle-filters:hover {
+  background-color: #0056b3;
+}
+
+.filter-form.hidden {
+  display: none;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.radio-group div {
+  display: flex;
+  align-items: center;
+}
+
+.radio-label {
+  margin-left: 5px;
+}
+
+.form-radio {
+  margin-right: 5px;
+}
+
+/* Keep the existing styles for announcements */
 a {
   text-decoration: none;
   color: inherit;

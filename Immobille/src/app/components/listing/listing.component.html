@@ -1,42 +1,56 @@
 <div id="main">
-  <form id="filter-form">
-    <label for="price-min">Minimum Price:</label>
-    <input type="number" id="price-min" name="price-min" placeholder="Min Price" value="0">
-    <label for="price-max">Maximum Price:</label>
-    <input type="number" id="price-max" name="price-max" placeholder="Max Price" value="100000000">
-
-    <label>Property Type:</label>
-    <select id="property-type" name="property-type" (change)="onTypeFilterChange($event)">
-      <option value="any">Any</option>
-      <option value="House">House</option>
-      <option value="Penthouse">Penthouse</option>
-      <option value="Apartment">Apartment</option>
-      <option value="Terrain">Terrain</option>
-    </select>
-
-    <label>Location:</label>
-    <select id="location" name="location" (change)="onLocationFilterChange($event)">
-      <option value="any">Any</option>
-      <option value="Cluj">Cluj</option>
-      <option value="Timisoara">Timisoara</option>
-      <option value="Bucuresti">Bucuresti</option>
-      <option value="other">Other</option>
-    </select>
-
-    <label for="for-sale">For Sale</label>
-    <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" checked="checked">
-    <label for="for-rent">For Rent:</label>
-    <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent">
+  <div class="filter-header">
+    <button id="toggle-filters" (click)="toggleFilters()" class="btn btn-primary">Show Filters</button>
+  </div>
+  <form id="filter-form" class="filter-form" [ngClass]="{ 'hidden': filtersHidden }">
+    <div class="form-group">
+      <label for="price-min">Minimum Price:</label>
+      <input type="number" id="price-min" name="price-min" placeholder="Min Price" value="0" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="price-max">Maximum Price:</label>
+      <input type="number" id="price-max" name="price-max" placeholder="Max Price" value="100000000" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Property Type:</label>
+      <select id="property-type" name="property-type" (change)="onTypeFilterChange($event)" class="form-control">
+        <option value="any">Any</option>
+        <option value="House">House</option>
+        <option value="Penthouse">Penthouse</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Terrain">Terrain</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Location:</label>
+      <select id="location" name="location" (change)="onLocationFilterChange($event)" class="form-control">
+        <option value="any">Any</option>
+        <option value="Cluj">Cluj</option>
+        <option value="Timisoara">Timisoara</option>
+        <option value="Bucuresti">Bucuresti</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group radio-group">
+      <div>
+        <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" checked class="form-radio">
+        <label class="radio-label" for="for-sale">For Sale</label>
+      </div>
+      <div>
+        <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent" class="form-radio">
+        <label class="radio-label" for="for-rent">For Rent</label>
+      </div>
+    </div>
   </form>
 
   <ul class="announcement-list" id="ads-list">
     <li *ngFor="let advertisement of advertisements; trackBy: trackByDescription" class="announcement">
-      <a [routerLink]="['/details', advertisement.id]" >
+      <a [routerLink]="['/details', advertisement.id]">
         <img [src]="advertisement.imageUrl" alt="Property Image">
         <div class="announcement-details">
-          <p class="status">{{ getStatusDisplay(advertisement.status)}}</p>
+          <p class="status">{{ getStatusDisplay(advertisement.status) }}</p>
           <p class="property-type">{{ capitalizeFirstLetter(advertisement.type) }}</p>
-          <h2> {{ capitalizeFirstLetter(advertisement.title) }}</h2>
+          <h2>{{ capitalizeFirstLetter(advertisement.title) }}</h2>
           <p>{{ capitalizeFirstLetter(advertisement.description) }}</p>
           <p class="price">Price: {{ advertisement.price }}</p>
           <p class="location">{{ advertisement.location }}</p>

@@ -17,6 +17,11 @@ import {CommonModule} from "@angular/common";
 })
 export class ListingComponent implements OnInit {
   advertisements: Property[] = [];
+  filtersHidden = true;
+
+  toggleFilters() {
+    this.filtersHidden = !this.filtersHidden;
+  }
 
   filters: Property = {
     id: "",
