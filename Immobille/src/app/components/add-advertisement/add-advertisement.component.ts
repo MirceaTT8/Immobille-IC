@@ -88,7 +88,6 @@ export class AddAdvertisementComponent implements OnInit {
       }
 
       if (this.propertyId) {
-        // Update existing property
         this.propertyService.updateProperty(this.propertyId, formData).subscribe({
           next: (response) => {
             console.log('Property updated successfully', response);
@@ -98,7 +97,6 @@ export class AddAdvertisementComponent implements OnInit {
           }
         });
       } else {
-        // Add new property
         this.propertyService.addProperty(formData).subscribe({
           next: (response) => {
             console.log('Property added successfully', response);
@@ -110,4 +108,5 @@ export class AddAdvertisementComponent implements OnInit {
       }
     }
   }
+
 }

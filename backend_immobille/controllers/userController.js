@@ -145,24 +145,44 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-
   const userId = req.params.id;
+  const delayDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
   console.log("userId:", userId);
   console.log("req.body:", req.body);
 
   const user = await User.findById(userId);
 
   if (user) {
+    const now = Date.now();
+    const lastUpdate = new Date(user.lastUpdate).getTime();
+    const timeElapsed = now - lastUpdate;
+
+    if (timeElapsed < delayDuration) {
+      const remainingTime = delayDuration - timeElapsed;
+      user.remainingUpdateTime = remainingTime; // Save the remaining time to the user object
+      await user.save();
+      return res.status(429).json({
+        message: `Please wait for ${Math.ceil(remainingTime / 60000)} minutes before updating again.`,
+        remainingTime,
+      });
+    }
+
     const { name, phoneNumber } = user;
     user.name = req.body.name || name;
     user.phoneNumber = req.body.phoneNumber || phoneNumber;
-    const updatedUser = await user.save();
-    res.status(200).json(updatedUser);
+    user.lastUpdate = now; // Update the last update timestamp
+
+    setTimeout(async () => {
+      const updatedUser = await user.save();
+      res.status(200).json(updatedUser);
+    }, 5000); // Optional short delay to simulate processing time
+
   } else {
     res.status(404);
     throw new Error("User not found");
   }
 });
+
 
 const getUserProperties = asyncHandler(async (req, res) => {
   try {

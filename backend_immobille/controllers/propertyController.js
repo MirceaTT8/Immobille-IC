@@ -101,18 +101,43 @@ const getProperty = asyncHandler(async (req, res) => {
 
 const updateProperty = asyncHandler(async (req, res) => {
   const propertyId = req.params.id;
-  const { type, status, title, description, price, location, imageUrl, images } = req.body;
+  const { type, status, title, description, price, location } = req.body;
+  const uploadedImages = [];
 
   try {
-    const property = await Property.findByIdAndUpdate(
-      propertyId,
-      { type, status, title, description, price, location, imageUrl, images },
-      { new: true, runValidators: true }
-    ).populate('user', '_id');
-
+    const property = await Property.findById(propertyId).populate('user', '_id');
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
+
+    if (req.files) {
+      const uploadPath = path.join(__dirname, '/../../Immobille/src/assets/');
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+
+      if (!Array.isArray(req.files.images)) {
+        req.files.images = [req.files.images];
+      }
+
+      for (const image of req.files.images) {
+        const uploadFilePath = path.join(uploadPath, image.name);
+        await image.mv(uploadFilePath);
+        uploadedImages.push({ url: `assets/${image.name}`, altText: image.name });
+      }
+
+      property.images = uploadedImages;
+      property.imageUrl = uploadedImages[0]?.url || null; // Set the main image URL
+    }
+
+    property.type = type;
+    property.status = status;
+    property.title = title;
+    property.description = description;
+    property.price = price;
+    property.location = location;
+
+    await property.save();
 
     return res.status(200).json({
       id: property._id.toString(),
@@ -131,6 +156,7 @@ const updateProperty = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
+
 const deleteProperty = asyncHandler(async (req, res) => {
   const { id } = req.params;
 

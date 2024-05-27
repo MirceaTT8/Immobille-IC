@@ -1,5 +1,5 @@
 <div class="container" *ngIf="user">
-  <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+  <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="form-container">
     <div class="form-group">
       <label for="name">Name</label>
       <input

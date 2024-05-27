@@ -20,7 +20,7 @@ label {
 
 #logoutButton {
   padding: 10px 20px;
-  background-color: #ff4d4d; /* Example logout button color */
+  background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 4px;
@@ -28,7 +28,7 @@ label {
 }
 
 #logoutButton:hover {
-  background-color: #ff3333; /* Darker shade on hover */
+  background-color: #ff3333;
 }
 
 

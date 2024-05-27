@@ -24,7 +24,7 @@ import {SettingsComponent} from "./settings/settings.component";
     <div class="wrapper">
       <div class="vertical-tabs-container">
         <div class="tabs">
-          <button class="tab-link" (click)="selectTab(1)" [ngClass]="{'active': selectedTab === 1}">Dashboard</button>
+          <button class="tab-link" (click)="selectTab(1)" [ngClass]="{'active': selectedTab === 1}">Profile Info</button>
           <button class="tab-link" (click)="selectTab(2)" [ngClass]="{'active': selectedTab === 2}">My Announcements</button>
           <button class="tab-link" (click)="selectTab(3)" [ngClass]="{'active': selectedTab === 3}">Saved Announcements</button>
           <button class="tab-link" (click)="selectTab(4)" [ngClass]="{'active': selectedTab === 4}">Add Advertisement</button>

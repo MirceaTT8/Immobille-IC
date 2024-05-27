@@ -1,11 +1,28 @@
 main{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     margin:0;
     padding-top: 70px;
     font-family: "Helvetica Neue",Arial,sans-serif;
-    background:#E1E7FD;
+    background-color: #f4f4f4; /* Set the main background color */
+
 }
 
+body {
+  margin: 0;
+  background-color: #f4f4f4; /* Light gray background for the whole page */
+}
+app-header {
+  flex-shrink: 0;
+  background-color: #ffffff;
+}
 
+router-outlet {
+  flex-grow: 1;
+  background-color: #007bff;
+}
+
+app-footer {
+  flex-shrink: 0;
+}

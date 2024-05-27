@@ -35,7 +35,8 @@ const userSchema = mongoose.Schema(
       savedAnnouncements: [{
           type: Schema.Types.ObjectId,
           ref: 'Property'
-      }]
+      }],
+      lastUpdate: { type: Date, default: Date.now }
     });
 
 

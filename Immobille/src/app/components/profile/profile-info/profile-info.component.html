@@ -10,7 +10,15 @@
       <span>{{ user?.email }}</span>
     </div>
     <div class="field">
-      <button id="logoutButton" (click)="logout()" >Logout</button>
+      <label>Number of Announcements:</label>
+      <span>{{ user?.properties?.length }}</span>
+    </div>
+    <div class="field">
+      <label>Number of Saved Announcements:</label>
+      <span>{{ user?.savedAnnouncements?.length }}</span>
+    </div>
+    <div class="field">
+      <button id="logoutButton" (click)="logout()">Logout</button>
     </div>
   </div>
 </div>
