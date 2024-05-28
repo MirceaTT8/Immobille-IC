@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const fs = require('fs');
 const path = require('path');
+
+
 const addProperty = asyncHandler(async (req, res) => {
   console.log(req.body); // Log the received fields
   console.log(req.files); // Log the received files
@@ -68,9 +70,13 @@ const addProperty = asyncHandler(async (req, res) => {
     });
 
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: error.message });
+    }
     return res.status(500).json({ message: error.message });
   }
 });
+
 
 const getProperty = asyncHandler(async (req, res) => {
   const propertyId = req.params.id;

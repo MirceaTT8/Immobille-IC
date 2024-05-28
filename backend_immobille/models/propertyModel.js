@@ -9,7 +9,16 @@ const propertySchema = new mongoose.Schema({
     set: v => v.toLowerCase().replace(' ', '-')
   },
   title: { type: String, required: true },
-  description: { type: String, required: true },
+  description: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return v.length >= 100;
+      },
+      message: props => `Description should be at least 100 characters long. Currently, it has ${props.value.length} characters.`
+    }
+  },
   price: { type: String, required: true },
   location: { type: String, required: true },
   imageUrl: { type: String, default: null },
@@ -24,6 +33,7 @@ const propertySchema = new mongoose.Schema({
     ref: 'User',
   }
 });
+
 
 const Property = mongoose.model('Property', propertySchema);
 module.exports = Property;

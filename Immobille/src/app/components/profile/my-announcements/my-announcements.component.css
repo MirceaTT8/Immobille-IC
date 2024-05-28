@@ -11,6 +11,9 @@ a {
 }
 
 .announcement {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: flex;
   background-color: #ffffff;
   max-width: 800px;
@@ -48,6 +51,15 @@ a {
   font-size: 16px;
   color: #666;
   line-height: 1.5;
+}
+
+.announcement .description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  height: 4.5em; /* Adjust based on the desired number of lines */
+
 }
 
 .announcement .location {
