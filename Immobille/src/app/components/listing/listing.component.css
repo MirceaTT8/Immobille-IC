@@ -106,6 +106,7 @@ a {
   margin: 20px auto;
   padding: 0; /* Remove padding here */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; /* Add relative positioning */
 }
 
 .announcement img {
@@ -160,4 +161,21 @@ a {
 
 .announcement.hidden {
   display: none;
+}
+
+.save-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute; /* Use absolute positioning */
+  bottom: 10px; /* Position it 10px from the bottom */
+  right: 10px; /* Position it 10px from the right */
+}
+
+.save-button:hover {
+  background-color: #0056b3;
 }

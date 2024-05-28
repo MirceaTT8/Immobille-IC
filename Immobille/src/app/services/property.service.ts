@@ -19,6 +19,10 @@ export class PropertyService {
     return this.http.get<Property>(`${this.propertyUrl}/getProperty/${id}`, { withCredentials: true });
   }
 
+  saveProperty(id: string): Observable<any> {
+    return this.http.post<any>(`${this.propertyUrl}/saveProperty/${id}`, {}, { withCredentials: true });
+  }
+
   updateProperty(propertyId: string, propertyData: FormData): Observable<any> {
     return this.http.put<any>(`${this.propertyUrl}/updateProperty/${propertyId}`, propertyData, { withCredentials: true });
   }

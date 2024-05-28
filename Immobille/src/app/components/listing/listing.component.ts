@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Property } from '../../interfaces/property';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {PropertyService} from "../../services/property.service";
+import {AuthService} from "../../services/auth.service";
 import {CommonModule} from "@angular/common";
+import {User} from "../../interfaces/user";
 
 @Component({
   selector: 'app-listing',
@@ -17,6 +19,7 @@ import {CommonModule} from "@angular/common";
 })
 export class ListingComponent implements OnInit {
   advertisements: Property[] = [];
+  user: User | null = null;
   filtersHidden = true;
 
   toggleFilters() {
@@ -37,13 +40,23 @@ export class ListingComponent implements OnInit {
     user: ''
   }
 
-  constructor(private propertyService: PropertyService, private route: ActivatedRoute) {}
+  constructor(private propertyService: PropertyService, private route: ActivatedRoute, private authService: AuthService,) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.filters.type = params['type'] || 'any';
       this.filters.status = params['status'] || 'for-sale';
       this.getProperties();
+    });
+    this.getUser();
+  }
+
+  getUser(): void {
+    this.authService.getUser().subscribe(user => {
+      this.user = user;
+      console.log(this.user)
+    }, error => {
+      console.error('Error fetching user data:', error);
     });
   }
 
@@ -59,6 +72,14 @@ export class ListingComponent implements OnInit {
     }, error => {
       console.error('Error fetching properties:', error);
       this.advertisements = [];
+    });
+  }
+
+  saveProperty(propertyId: string): void {
+    this.propertyService.saveProperty(propertyId).subscribe(response => {
+      console.log('Property saved successfully:', response);
+    }, error => {
+      console.error('Error saving property:', error);
     });
   }
 
