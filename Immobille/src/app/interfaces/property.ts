@@ -6,10 +6,12 @@ export interface Property {
   type: string;
   status: string;
   title: string;
+  cif: string;
   description: string;
   price: string;
   location: string;
   imageUrl: string | null;
   images: { url: string, altText?: string }[];
   user: User["_id"];
+
 }

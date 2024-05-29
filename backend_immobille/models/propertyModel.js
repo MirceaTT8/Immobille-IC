@@ -31,7 +31,8 @@ const propertySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-  }
+  },
+  cif: { type: String, required: true }
 });
 
 

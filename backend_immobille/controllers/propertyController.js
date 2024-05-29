@@ -13,11 +13,17 @@ const addProperty = asyncHandler(async (req, res) => {
     return res.status(401).json({ message: "User not authenticated" });
   }
 
-  const { type, status, title, description, price, location } = req.body;
+  const { type, status, title, description, price, location, cif, images } = req.body;
   const userId = req.user._id;
 
-  if (!type || !status || !title || !description || !price || !location || !req.files || Object.keys(req.files).length === 0) {
+  // Check if all required fields are present
+  if (!type || !status || !title || !description || !price || !location || !cif) {
     return res.status(400).json({ message: "Trebuie sa completezi toate campurile cu date valide" });
+  }
+
+  // Check if files are uploaded or if images are provided in the body
+  if ((!req.files || Object.keys(req.files).length === 0) && (!images || images.length === 0)) {
+    return res.status(400).json({ message: "Trebuie sa furnizezi imagini valide" });
   }
 
   const uploadedImages = [];
@@ -28,14 +34,18 @@ const addProperty = asyncHandler(async (req, res) => {
     fs.mkdirSync(uploadPath, { recursive: true });
   }
 
-  if (!Array.isArray(req.files.images)) {
-    req.files.images = [req.files.images];
-  }
+  if (req.files && req.files.images) {
+    if (!Array.isArray(req.files.images)) {
+      req.files.images = [req.files.images];
+    }
 
-  for (const image of req.files.images) {
-    const uploadFilePath = path.join(uploadPath, image.name);
-    await image.mv(uploadFilePath);
-    uploadedImages.push({url: `assets/${image.name}`, altText: image.name}); // Ensure URL matches the served path
+    for (const image of req.files.images) {
+      const uploadFilePath = path.join(uploadPath, image.name);
+      await image.mv(uploadFilePath);
+      uploadedImages.push({ url: `assets/${image.name}`, altText: image.name }); // Ensure URL matches the served path
+    }
+  } else if (Array.isArray(images)) {
+    uploadedImages.push(...images);
   }
 
   try {
@@ -46,9 +56,10 @@ const addProperty = asyncHandler(async (req, res) => {
       description,
       price,
       location,
-      imageUrl: uploadedImages[0].url, // Assuming the first image is the main image
+      imageUrl: uploadedImages.length > 0 ? uploadedImages[0].url : null, // Assuming the first image is the main image
       images: uploadedImages,
-      user: userId
+      user: userId,
+      cif
     });
 
     await User.findByIdAndUpdate(userId, { $push: { properties: property._id } });
@@ -66,7 +77,8 @@ const addProperty = asyncHandler(async (req, res) => {
       location: property.location,
       imageUrl: property.imageUrl,
       images: property.images,
-      userId: userId
+      userId: userId,
+      cif: property.cif
     });
 
   } catch (error) {
@@ -76,6 +88,9 @@ const addProperty = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
+
+
+
 
 
 const getProperty = asyncHandler(async (req, res) => {
@@ -97,13 +112,15 @@ const getProperty = asyncHandler(async (req, res) => {
       location: property.location,
       imageUrl: property.imageUrl,
       images: property.images,
-      userId: property.user._id
+      userId: property.user._id,
+      cif: property.cif  // Include CIF in the response
     });
 
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 });
+
 
 const updateProperty = asyncHandler(async (req, res) => {
   const propertyId = req.params.id;

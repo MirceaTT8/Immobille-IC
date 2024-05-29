@@ -26,11 +26,13 @@ export class AddAdvertisementComponent implements OnInit {
       title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
       price: new FormControl('', [Validators.required]),
-      location: new FormControl('', [Validators.required, Validators.maxLength(200)])
+      location: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      cif: new FormControl('', [Validators.required, Validators.maxLength(20)]) // Ensure this is defined correctly
     });
   }
 
   ngOnInit(): void {
+    console.log(this.addAdvertisementForm); // Log the form group
     this.route.paramMap.subscribe(params => {
       this.propertyId = params.get('id');
       if (this.propertyId) {
@@ -46,6 +48,7 @@ export class AddAdvertisementComponent implements OnInit {
     });
   }
 
+
   populateForm(property: Property): void {
     this.addAdvertisementForm.patchValue({
       type: property.type,
@@ -53,7 +56,8 @@ export class AddAdvertisementComponent implements OnInit {
       title: property.title,
       description: property.description,
       price: property.price,
-      location: property.location
+      location: property.location,
+      cif: property.cif // Ensure this matches the form control name
     });
   }
 
@@ -68,6 +72,7 @@ export class AddAdvertisementComponent implements OnInit {
       formData.append('description', formValues.description);
       formData.append('price', formValues.price);
       formData.append('location', formValues.location);
+      formData.append('cif', formValues.cif); // Ensure this is appended
 
       const mainImage = (document.getElementById('imageUrl') as HTMLInputElement)?.files![0];
       const image1 = (document.getElementById('image1') as HTMLInputElement)?.files![0];
@@ -91,6 +96,7 @@ export class AddAdvertisementComponent implements OnInit {
         this.propertyService.updateProperty(this.propertyId, formData).subscribe({
           next: (response) => {
             console.log('Property updated successfully', response);
+            this.router.navigate(['/details', this.propertyId]);
           },
           error: (error) => {
             console.error('Error updating property', error);
@@ -108,5 +114,4 @@ export class AddAdvertisementComponent implements OnInit {
       }
     }
   }
-
 }

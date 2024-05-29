@@ -3,27 +3,27 @@
     <button id="toggle-filters" (click)="toggleFilters()" class="btn btn-primary">Show Filters</button>
   </div>
   <form id="filter-form" class="filter-form" [ngClass]="{ 'hidden': filtersHidden }">
-    <div class="form-group">
-      <label for="price-min">Minimum Price:</label>
-      <input type="number" id="price-min" name="price-min" placeholder="Min Price" value="0" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="price-max">Maximum Price:</label>
-      <input type="number" id="price-max" name="price-max" placeholder="Max Price" value="100000000" class="form-control">
-    </div>
+    <!--    <div class="form-group">-->
+    <!--      <label for="price-min">Minimum Price:</label>-->
+    <!--      <input type="number" id="price-min" name="price-min" placeholder="Min Price" [(ngModel)]="filters.priceMin" class="form-control">-->
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--      <label for="price-max">Maximum Price:</label>-->
+    <!--      <input type="number" id="price-max" name="price-max" placeholder="Max Price" [(ngModel)]="filters.priceMax" class="form-control">-->
+    <!--    </div>-->
     <div class="form-group">
       <label>Property Type:</label>
-      <select id="property-type" name="property-type" (change)="onTypeFilterChange($event)" class="form-control">
+      <select id="property-type" name="property-type" (change)="onTypeFilterChange($event)" class="form-control" [(ngModel)]="filters.type">
         <option value="any">Any</option>
-        <option value="House">House</option>
-        <option value="Penthouse">Penthouse</option>
-        <option value="Apartment">Apartment</option>
-        <option value="Terrain">Terrain</option>
+        <option value="house">House</option>
+        <option value="penthouse">Penthouse</option>
+        <option value="apartment">Apartment</option>
+        <option value="terrain">Terrain</option>
       </select>
     </div>
     <div class="form-group">
       <label>Location:</label>
-      <select id="location" name="location" (change)="onLocationFilterChange($event)" class="form-control">
+      <select id="location" name="location" (change)="onLocationFilterChange($event)" class="form-control" [(ngModel)]="filters.location">
         <option value="any">Any</option>
         <option value="Cluj">Cluj</option>
         <option value="Timisoara">Timisoara</option>
@@ -33,11 +33,11 @@
     </div>
     <div class="form-group radio-group">
       <div>
-        <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" checked class="form-radio">
+        <input type="radio" id="for-sale" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="sale" class="form-radio" [(ngModel)]="filters.status">
         <label class="radio-label" for="for-sale">For Sale</label>
       </div>
       <div>
-        <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent" class="form-radio">
+        <input type="radio" id="for-rent" name="sale-or-rent" (change)="onStatusFilterChange($event)" value="rent" class="form-radio" [(ngModel)]="filters.status">
         <label class="radio-label" for="for-rent">For Rent</label>
       </div>
     </div>

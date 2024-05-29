@@ -1,18 +1,19 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Property } from '../../interfaces/property';
-import {ActivatedRoute, RouterLink} from "@angular/router";
-import {PropertyService} from "../../services/property.service";
-import {AuthService} from "../../services/auth.service";
-import {CommonModule} from "@angular/common";
-import {User} from "../../interfaces/user";
+import { ActivatedRoute, RouterLink } from "@angular/router";
+import { PropertyService } from "../../services/property.service";
+import { AuthService } from "../../services/auth.service";
+import { CommonModule } from "@angular/common";
+import { User } from "../../interfaces/user";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-listing',
   standalone: true,
   imports: [
     RouterLink,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: "./listing.component.html",
   styleUrl: './listing.component.css'
@@ -28,7 +29,7 @@ export class ListingComponent implements OnInit {
 
   filters: Property = {
     id: "",
-    _id:"",
+    _id: "",
     type: "any",
     status: "for-sale",
     title: "",
@@ -37,10 +38,11 @@ export class ListingComponent implements OnInit {
     location: "",
     imageUrl: "",
     images: [],
-    user: ''
+    user: '',
+    cif:''
   }
 
-  constructor(private propertyService: PropertyService, private route: ActivatedRoute, private authService: AuthService,) {}
+  constructor(private propertyService: PropertyService, private route: ActivatedRoute, private authService: AuthService,) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -119,6 +121,4 @@ export class ListingComponent implements OnInit {
   capitalizeFirstLetter(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
-
-
 }
