@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const e = require("express");
-
+const Review = require("../models/reviewModel");
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: "1d"
@@ -243,6 +243,23 @@ const getUserSavedProperties = asyncHandler(async (req, res) => {
   }
 });
 
+const addReview = asyncHandler(async (req, res) => {
+  const { reviewer, text, userId } = req.body;
+
+  if (!reviewer || !text || !userId) {
+    res.status(400);
+    throw new Error('Reviewer, text, and user ID are required');
+  }
+
+  const review = new Review({ reviewer, text, user: userId });
+  await review.save();
+
+  // Add review to the user's reviews array
+  await User.findByIdAndUpdate(userId, { $push: { reviews: review._id } });
+
+  res.status(201).json(review);
+});
+
 module.exports = {
     registerUser,
     loginUser,
@@ -252,6 +269,7 @@ module.exports = {
     updateUser,
     getUserProperties,
     getUserSavedProperties,
-    getUserById
+    getUserById,
+    addReview
 };
 

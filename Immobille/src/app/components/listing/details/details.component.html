@@ -22,11 +22,11 @@
       </li>
     </ul>
   </div>
-  <a [routerLink]="['/review']">
+  <a [routerLink]="['/review',advertisement?.userId]">
     <div class="user-info">
       <h3>User Information</h3>
       <p><strong>Name:</strong> {{ user?.name }}</p>
-  <!--    <p><strong>Phone:</strong> {{ user?.phoneNumber }}</p>-->
+      <p><strong>Phone:</strong> {{ user?.phoneNumber }}</p>
     </div>
   </a>
 </div>

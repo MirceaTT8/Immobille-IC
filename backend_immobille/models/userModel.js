@@ -36,6 +36,10 @@ const userSchema = mongoose.Schema(
           type: Schema.Types.ObjectId,
           ref: 'Property'
       }],
+      reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+      }],
       lastUpdate: { type: Date, default: Date.now }
     });
 

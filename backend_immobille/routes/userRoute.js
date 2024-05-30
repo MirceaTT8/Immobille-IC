@@ -7,7 +7,8 @@ const { registerUser,
   updateUser,
   getUserProperties,
   getUserSavedProperties,
-  getUserById} = require("../controllers/userController");
+  getUserById,
+  addReview} = require("../controllers/userController");
 const {
   addProperty,
   getProperty,
@@ -16,12 +17,18 @@ const {
   getAllProperties,
   saveProperty,
   properties} = require("../controllers/propertyController");
+
 const { protect } = require("../middleware/authMiddleware");
 const path = require("node:path");
 const router = express.Router();
 
 
+
+
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+router.post("/addReview",addReview)
+
 
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);

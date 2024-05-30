@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
 const errorHandler = require("./middleware/errorMiddleware");
-const path = require('path');
+
 
 mongoose.set('strictQuery', true); // Suppress the warning and maintain current behavior
 

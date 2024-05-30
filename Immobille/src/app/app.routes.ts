@@ -49,11 +49,11 @@ const routeConfig: Routes = [
         component: DetailsComponent,
         title: 'Details Property'
       },
-  {
-    path: 'review',
-    component:ProfileReviewComponent,
-    title:'User Review'
-  }
+      {
+        path: 'review/:userId',
+        component: ProfileReviewComponent,
+        title: 'User Review'
+      }
  ];
 
  export default routeConfig;
