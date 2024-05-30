@@ -3,7 +3,7 @@ export interface Review {
   id?: any;
   reviewer: string;
   text: string;
-  user: string;
+  userId: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

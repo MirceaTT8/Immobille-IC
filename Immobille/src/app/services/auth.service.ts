@@ -52,8 +52,8 @@ export class AuthService {
     return this.http.get<any[]>(`${this.userUrl}/getReviewsById/${userId}`);
   }
 
-  addReview(review: Review): Observable<any> {
-    return this.http.post<any>(`${this.userUrl}/addReview`, review);
+  addReview(reviewData: FormData): Observable<Review> {
+    return this.http.post<Review>(`${this.userUrl}/addReview`, reviewData, { withCredentials: true });
   }
 
 
