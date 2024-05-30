@@ -129,6 +129,7 @@ const getUser = asyncHandler(async (req, res) => {
       .select("-password")
       .populate('properties')
       .populate('savedAnnouncements')
+      .populate('reviews')
       .exec();
 
     if (user) {
@@ -254,10 +255,27 @@ const addReview = asyncHandler(async (req, res) => {
   const review = new Review({ reviewer, text, user: userId });
   await review.save();
 
-  // Add review to the user's reviews array
   await User.findByIdAndUpdate(userId, { $push: { reviews: review._id } });
 
   res.status(201).json(review);
+});
+
+const getUserReviews = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    res.status(400);
+    throw new Error('User ID is required');
+  }
+
+  const reviews = await Review.find({ user: userId });
+
+  if (!reviews) {
+    res.status(404);
+    throw new Error('No reviews found for this user');
+  }
+
+  res.status(200).json(reviews);
 });
 
 module.exports = {
@@ -270,6 +288,7 @@ module.exports = {
     getUserProperties,
     getUserSavedProperties,
     getUserById,
-    addReview
+    addReview,
+    getUserReviews
 };
 

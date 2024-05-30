@@ -54,7 +54,6 @@ export class DetailsComponent implements OnInit {
             thumbImage: image.url,
             alt: image.altText || 'Property Image',
           }));
-          console.log(this.imageObject[0]);
           this.cdr.detectChanges();
         }
       },

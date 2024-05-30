@@ -1,0 +1,21 @@
+<ul class="announcement-list" id="ads-list">
+  <li class="announcement">
+    <div class="slider-container">
+      <ng-image-slider
+        [images]="imageObject"
+        [infinite]="false"
+        [autoSlide]="3"
+        [imageSize]="{width: '100%', height: 'auto'}"
+        [showArrow]="true"
+        [slideImage]="1"></ng-image-slider>
+    </div>
+    <div class="announcement-details">
+      <p class="status">{{ advertisement?.status }}</p>
+      <p class="property-type">{{ advertisement?.type }}</p>
+      <h2>{{ advertisement?.title }}</h2>
+      <p>{{ advertisement?.description }}</p>
+      <p class="price">Price: {{ advertisement?.price }}</p>
+      <p class="location">{{ advertisement?.location }}</p>
+    </div>
+  </li>
+</ul>

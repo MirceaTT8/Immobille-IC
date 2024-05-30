@@ -1,4 +1,5 @@
 import { Property } from './property'
+import { Review} from "./review";
 
 export interface User {
   _id?: any;
@@ -9,4 +10,5 @@ export interface User {
   phoneNumber: string;
   properties: Property[];
   savedAnnouncements: Property[];
+  reviews: Review[];
 }

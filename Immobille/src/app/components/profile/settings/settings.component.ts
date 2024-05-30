@@ -23,7 +23,8 @@ export class SettingsComponent implements OnInit {
     phoneNumber: '',
     password: '',
     properties: [],
-    savedAnnouncements: []
+    savedAnnouncements: [],
+    reviews: []
   };
 
   constructor(

@@ -5,6 +5,7 @@ import { UserLogin} from "../interfaces/user-login";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {Property} from "../interfaces/property";
+import {Review} from "../interfaces/review";
 @Injectable({
   providedIn: 'root'
 })
@@ -45,6 +46,14 @@ export class AuthService {
   }
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  getReviewsByUserId(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.userUrl}/getReviewsById/${userId}`);
+  }
+
+  addReview(review: Review): Observable<any> {
+    return this.http.post<any>(`${this.userUrl}/addReview`, review);
   }
 
 

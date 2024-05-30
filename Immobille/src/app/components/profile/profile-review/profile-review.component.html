@@ -1,0 +1,48 @@
+<div class="page-container">
+  <div class="content-wrapper">
+    <div class="user-info">
+      <h3>User Information</h3>
+      <p><strong>Name:</strong> {{ user?.name }}</p>
+      <p><strong>Phone:</strong> {{ user?.phoneNumber }}</p>
+    </div>
+
+    <div class="reviews-container">
+      <h3>Reviews</h3>
+      <!-- Static reviews can be removed or commented out -->
+      <!--
+      <div class="review">
+        <p><strong>Reviewer:</strong> John Doe</p>
+        <p><strong>Review:</strong> I had an excellent experience buying a house with Mircea. He was very professional and helped me through every step of the process. Highly recommend!</p>
+      </div>
+      <div class="review">
+        <p><strong>Reviewer:</strong> Jane Smith</p>
+        <p><strong>Review:</strong> Mircea was extremely helpful in selling my apartment. He provided great advice and managed to get a great price for it. Very satisfied with his services!</p>
+      </div>
+      <div class="review">
+        <p><strong>Reviewer:</strong> Michael Johnson</p>
+        <p><strong>Review:</strong> I rented a house with the help of Mircea. The process was smooth and hassle-free. He made sure all my concerns were addressed promptly. Would definitely work with him again.</p>
+      </div>
+      -->
+      <!-- Dynamic reviews using *ngFor -->
+      <div *ngFor="let review of reviews" class="review">
+        <p><strong>Reviewer:</strong> {{ review.reviewer }}</p>
+        <p><strong>Review:</strong> {{ review.text }}</p>
+      </div>
+    </div>
+
+    <div class="add-review-container">
+      <h3>Add a Review</h3>
+      <form (ngSubmit)="addReview()">
+        <div class="form-group">
+          <label for="reviewer">Reviewer:</label>
+          <input type="text" id="reviewer" name="reviewer" [(ngModel)]="newReview.reviewer" placeholder="Reviewer" disabled>
+        </div>
+        <div class="form-group">
+          <label for="review">Review:</label>
+          <textarea id="review" name="review" [(ngModel)]="newReview.text" placeholder="Review"></textarea>
+        </div>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

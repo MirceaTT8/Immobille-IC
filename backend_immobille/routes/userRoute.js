@@ -8,7 +8,8 @@ const { registerUser,
   getUserProperties,
   getUserSavedProperties,
   getUserById,
-  addReview} = require("../controllers/userController");
+  addReview,
+  getUserReviews} = require("../controllers/userController");
 const {
   addProperty,
   getProperty,
@@ -28,6 +29,7 @@ const router = express.Router();
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 router.post("/addReview",addReview)
+router.get("/getReviewsById/:userId",getUserReviews)
 
 
 router.post("/auth/register", registerUser);
