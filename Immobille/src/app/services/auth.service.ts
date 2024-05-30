@@ -29,6 +29,9 @@ export class AuthService {
       tap(user => this.currentUserSubject.next(user))
     );
   }
+  getUserById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/${id}`);
+  }
   getUserProperties(): Observable<Property[]> {
     return this.http.get<Property[]>(`${this.apiUrl}/getUserProperties`);
   }

@@ -13,5 +13,6 @@ export interface Property {
   imageUrl: string | null;
   images: { url: string, altText?: string }[];
   user: User["_id"];
+  userId?: string;
 
 }

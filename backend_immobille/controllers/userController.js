@@ -144,6 +144,29 @@ const getUser = asyncHandler(async (req, res) => {
   }
 });
 
+const getUserById = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate('properties')
+      .populate('savedAnnouncements')
+      .exec();
+
+    if (user) {
+      // Convert mongoose document to plain JavaScript object
+      const userObj = user.toObject();
+      res.status(200).json(userObj);
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user details: " + error.message });
+  }
+});
+
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const delayDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
@@ -228,6 +251,7 @@ module.exports = {
     getLoginStatus,
     updateUser,
     getUserProperties,
-    getUserSavedProperties
+    getUserSavedProperties,
+    getUserById
 };
 

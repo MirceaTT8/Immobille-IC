@@ -6,7 +6,8 @@ const { registerUser,
   getLoginStatus,
   updateUser,
   getUserProperties,
-  getUserSavedProperties} = require("../controllers/userController");
+  getUserSavedProperties,
+  getUserById} = require("../controllers/userController");
 const {
   addProperty,
   getProperty,
@@ -31,6 +32,7 @@ router.get("/getUser", protect, getUser);
 router.get("/getLoginStatus", getLoginStatus);
 
 router.patch("/updateUser/:id", protect, updateUser);
+router.get("/auth/user/:id",getUserById)
 
 router.post("/addProperty", protect, addProperty);
 router.get("/getProperty/:id",getProperty);

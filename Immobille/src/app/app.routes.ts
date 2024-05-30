@@ -6,6 +6,7 @@ import { ListingComponent } from './components/listing/listing.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddAdvertisementComponent} from "./components/add-advertisement/add-advertisement.component";
 import { DetailsComponent} from "./components/listing/details/details.component";
+import {ProfileReviewComponent} from "./components/profile/profile-review/profile-review.component";
 
 const routeConfig: Routes = [
     {
@@ -47,7 +48,12 @@ const routeConfig: Routes = [
         path: 'details/:id',
         component: DetailsComponent,
         title: 'Details Property'
-      }
+      },
+  {
+    path: 'review',
+    component:ProfileReviewComponent,
+    title:'User Review'
+  }
  ];
 
  export default routeConfig;

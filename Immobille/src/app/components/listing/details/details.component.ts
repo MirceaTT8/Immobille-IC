@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PropertyService} from "../../../services/property.service";
-import {AuthService} from "../../../services/auth.service";
-import { Property} from "../../../interfaces/property";
-import { RouterLink} from "@angular/router";
-import { CommonModule} from "@angular/common";
-import {NgImageSliderModule} from "ng-image-slider";
+import { PropertyService } from "../../../services/property.service";
+import { AuthService } from "../../../services/auth.service";
+import { Property } from "../../../interfaces/property";
+import { RouterLink } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { NgImageSliderModule } from "ng-image-slider";
 
 @Component({
   selector: 'app-details',
@@ -14,19 +14,20 @@ import {NgImageSliderModule} from "ng-image-slider";
     RouterLink,
     CommonModule,
     NgImageSliderModule
-
   ],
   templateUrl: './details.component.html',
-  styleUrl: './details.component.css'
+  styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit {
 
   advertisement: Property | undefined;
+  user: any; // to hold user details
   imageObject: Array<object> = []; // Array to hold image objects for the slider
 
   constructor(
     private route: ActivatedRoute,
     private propertyService: PropertyService,
+    private authService: AuthService, // inject AuthService
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -38,19 +39,21 @@ export class DetailsComponent implements OnInit {
       }
     });
   }
+
   getProperty(propertyId: string): void {
     this.propertyService.getProperty(propertyId).subscribe({
       next: (data) => {
         this.advertisement = data;
-        console.log(this.advertisement)
+        console.log(this.advertisement);
+        if (this.advertisement?.userId) {
+          this.getUserById(this.advertisement.userId);
+        }
         if (this.advertisement.images) {
           this.imageObject = this.advertisement.images.map((image: { url: String; altText?: String | undefined; }) => ({
             image: image.url,
             thumbImage: image.url,
             alt: image.altText || 'Property Image',
           }));
-
-
           console.log(this.imageObject[0]);
           this.cdr.detectChanges();
         }
@@ -61,5 +64,15 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-
+  getUserById(userId: string): void {
+    this.authService.getUserById(userId).subscribe({
+      next: (userData) => {
+        this.user = userData;
+        console.log(this.user);
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      }
+    });
+  }
 }
