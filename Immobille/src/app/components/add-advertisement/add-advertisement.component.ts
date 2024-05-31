@@ -3,17 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PropertyService } from '../../services/property.service';
 import { Property } from '../../interfaces/property';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-add-advertisement',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-advertisement.component.html',
   styleUrls: ['./add-advertisement.component.css']
 })
 export class AddAdvertisementComponent implements OnInit {
   addAdvertisementForm: FormGroup;
   propertyId: string | null = null;
+
+  // Image URLs for preview
+  mainImageUrl: string | null = null;
+  image1Url: string | null = null;
+  image2Url: string | null = null;
+  image3Url: string | null = null;
 
   constructor(
     private propertyService: PropertyService,
@@ -49,7 +56,6 @@ export class AddAdvertisementComponent implements OnInit {
     });
   }
 
-
   populateForm(property: Property): void {
     this.addAdvertisementForm.patchValue({
       type: property.type,
@@ -60,6 +66,36 @@ export class AddAdvertisementComponent implements OnInit {
       location: property.location,
       cif: property.cif // Ensure this matches the form control name
     });
+
+    // Set image URLs for preview
+    this.mainImageUrl = property.imageUrl || null;
+    this.image1Url = property.images[0]?.url || null;
+    this.image2Url = property.images[1]?.url || null;
+    this.image3Url = property.images[2]?.url || null;
+  }
+
+  onFileChange(event: Event, imageType: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        switch (imageType) {
+          case 'mainImage':
+            this.mainImageUrl = e.target.result;
+            break;
+          case 'image1':
+            this.image1Url = e.target.result;
+            break;
+          case 'image2':
+            this.image2Url = e.target.result;
+            break;
+          case 'image3':
+            this.image3Url = e.target.result;
+            break;
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   onSubmit() {
