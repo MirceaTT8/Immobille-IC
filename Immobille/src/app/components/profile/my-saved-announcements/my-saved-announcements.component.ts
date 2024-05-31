@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../../interfaces/user";
 import {AuthService} from "../../../services/auth.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-my-saved-announcements',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './my-saved-announcements.component.html',
   styleUrl: './my-saved-announcements.component.css'
 })

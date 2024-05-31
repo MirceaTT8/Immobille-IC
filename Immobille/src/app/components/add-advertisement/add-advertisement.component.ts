@@ -38,6 +38,7 @@ export class AddAdvertisementComponent implements OnInit {
       if (this.propertyId) {
         this.propertyService.getProperty(this.propertyId).subscribe({
           next: (property: Property) => {
+            console.log(property)
             this.populateForm(property);
           },
           error: (error) => {

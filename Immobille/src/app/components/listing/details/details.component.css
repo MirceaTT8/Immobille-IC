@@ -97,3 +97,15 @@
 .announcement.hidden {
   display: none;
 }
+
+.no-underline {
+  text-decoration: none;
+}
+
+.no-underline:focus,
+.no-underline:active,
+.no-underline:hover {
+  text-decoration: none;
+  outline: none;
+}
+

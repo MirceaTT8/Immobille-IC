@@ -11,6 +11,9 @@ a {
 }
 
 .announcement {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: flex;
   background-color: #ffffff;
   max-width: 800px;
