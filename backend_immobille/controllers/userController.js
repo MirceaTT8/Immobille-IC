@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const e = require("express");
 const Review = require("../models/reviewModel");
+
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: "1d"
@@ -133,7 +134,6 @@ const getUser = asyncHandler(async (req, res) => {
       .exec();
 
     if (user) {
-      // Convert mongoose document to plain JavaScript object
       const userObj = user.toObject();
       res.status(200).json(userObj);
     } else {
@@ -170,37 +170,19 @@ const getUserById = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const delayDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
   console.log("userId:", userId);
   console.log("req.body:", req.body);
 
   const user = await User.findById(userId);
 
   if (user) {
-    const now = Date.now();
-    const lastUpdate = new Date(user.lastUpdate).getTime();
-    const timeElapsed = now - lastUpdate;
-
-    if (timeElapsed < delayDuration) {
-      const remainingTime = delayDuration - timeElapsed;
-      user.remainingUpdateTime = remainingTime; // Save the remaining time to the user object
-      await user.save();
-      return res.status(429).json({
-        message: `Please wait for ${Math.ceil(remainingTime / 60000)} minutes before updating again.`,
-        remainingTime,
-      });
-    }
-
     const { name, phoneNumber } = user;
     user.name = req.body.name || name;
     user.phoneNumber = req.body.phoneNumber || phoneNumber;
-    user.lastUpdate = now; // Update the last update timestamp
+    user.lastUpdate = Date.now(); // Update the last update timestamp
 
-    setTimeout(async () => {
-      const updatedUser = await user.save();
-      res.status(200).json(updatedUser);
-    }, 5000); // Optional short delay to simulate processing time
-
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
   } else {
     res.status(404);
     throw new Error("User not found");

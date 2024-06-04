@@ -109,7 +109,7 @@ export class AddAdvertisementComponent implements OnInit {
       formData.append('description', formValues.description);
       formData.append('price', formValues.price);
       formData.append('location', formValues.location);
-      formData.append('cif', formValues.cif); // Ensure this is appended
+      formData.append('cif', formValues.cif);
 
       const mainImage = (document.getElementById('imageUrl') as HTMLInputElement)?.files![0];
       const image1 = (document.getElementById('image1') as HTMLInputElement)?.files![0];

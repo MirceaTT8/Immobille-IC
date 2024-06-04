@@ -74,4 +74,16 @@ export class DetailsComponent implements OnInit {
       }
     });
   }
+
+  getStatusDisplay(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      'for-sale': 'For Sale',
+      'for-rent': 'For Rent'
+    };
+    return statusMap[status.toLowerCase()] || status;
+  }
+
+  capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
 }

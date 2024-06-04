@@ -23,9 +23,6 @@ const { protect } = require("../middleware/authMiddleware");
 const path = require("node:path");
 const router = express.Router();
 
-
-
-
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 router.post("/addReview",addReview)
@@ -45,7 +42,6 @@ router.get("/auth/user/:id",getUserById)
 
 router.post("/addProperty", protect, addProperty);
 router.get("/getProperty/:id",getProperty);
-// router.get("/getAllProperties",protect ,getAllProperties);
 router.get("/properties", protect, properties);
 router.put("/updateProperty/:id", updateProperty);
 router.delete("/deleteProperty/:id", protect , deleteProperty);
